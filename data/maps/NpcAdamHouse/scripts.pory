@@ -1,0 +1,99 @@
+mapscripts NpcAdamHouse_MapScripts {}
+
+
+script Adam_Sister {
+    lock
+    msgbox("Sometimes I think Grandma likes Doduo\nmore than she likes me...", MSGBOX_NPC)
+    release
+}
+
+movement NpcAdamHouse_Mov_GrandmaExclaim {
+    emote_exclamation_mark
+}
+
+script Adam_Grandma {
+      lock
+    faceplayer
+
+    msgbox("Oh, hello dear! I'm just making lunch\nfor my sweet Doduo!", MSGBOX_NPC)
+
+    waitmessage
+    delay(30)   // small pause: 30 frames ≈ 0.5 sec
+    applymovement(LOCALID_GRANDMA, NpcAdamHouse_Mov_GrandmaExclaim)
+    waitmovement(LOCALID_GRANDMA)
+
+
+    msgbox("...Oh! And for my granddaughter too,\nof course!", MSGBOX_DEFAULT)
+
+    release
+}
+
+script Old_Man_NPC {
+   lock
+faceplayer
+
+// First: if we've already given the Sharp Beak, only say the after text
+if (flag(FLAG_OLD_MAN_GAVE_SHARP_BEAK)) {
+    msgbox(
+        "Adam is working even harder\nbecause of you {PLAYER}!\p"
+        "Please battle him again soon.",
+        MSGBOX_DEFAULT
+    )
+    release
+    end
+}
+
+// Now check if Adam has been defeated
+checktrainerflag(TRAINER_ADAM)
+if (var(VAR_RESULT)) {
+    // Give the item for the first time
+    msgbox(
+        "Hohoho! So you actually beat Adam?\n"
+        "I knew there was something special\p"
+        "about you, {PLAYER}!\p"
+        "Take this Sharp Beak. It'll make\n"
+        "your Flying-type moves just as\p"
+        "just as strong as Adam's.",
+        MSGBOX_DEFAULT
+    )
+    giveitem(ITEM_SHARP_BEAK, 1)
+    if (var(VAR_RESULT) == FALSE) {
+        msgbox("Oh, your Bag is full!", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    setflag(FLAG_OLD_MAN_GAVE_SHARP_BEAK)
+    msgbox("Use it wisely!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+// Fallback: Adam not beaten yet, normal dialog
+msgbox(
+    "Hello {PLAYER}! if you get the chance,\n"
+    "please give Adam a battle.\p"
+    "He recently moved here from \nViridian City. He graduated from\p"
+    "the trainer school there and is \nlooking to improve his skills.",
+    MSGBOX_DEFAULT
+)
+release
+end
+}
+
+
+movement NpcAdamHouse_Mov_DoduoHop {
+    jump_in_place_down
+    jump_in_place_down
+}
+
+script Doduo_NPC {
+    lock
+    faceplayer
+    applymovement(ADAM_DODUO, NpcAdamHouse_Mov_DoduoHop)
+    waitmovement(0)
+    playmoncry(SPECIES_DODUO, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("It looks hungry!", MSGBOX_DEFAULT)
+    release
+    end
+}

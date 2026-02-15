@@ -7,7 +7,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_BULBASAUR] =
     {
         .baseHP        = 45,
-        .baseAttack    = 49,
+        .baseAttack    = 55,
         .baseDefense   = 49,
         .baseSpeed     = 45,
         .baseSpAttack  = 65,
@@ -26,7 +26,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
         .speciesName = _("Bulbasaur"),
         .cryId = CRY_BULBASAUR,
         .natDexNum = NATIONAL_DEX_BULBASAUR,
-        .categoryName = _("Seed"),
+        .categoryName = _("Bulb"),
         .height = 7,
         .weight = 69,
         .description = COMPOUND_STRING(
@@ -76,7 +76,7 @@ const struct SpeciesInfo gSpeciesInfoGen1[] =
     [SPECIES_IVYSAUR] =
     {
         .baseHP        = 60,
-        .baseAttack    = 62,
+        .baseAttack    = 70,
         .baseDefense   = 63,
         .baseSpeed     = 60,
         .baseSpAttack  = 80,

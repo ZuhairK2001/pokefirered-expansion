@@ -27,21 +27,6 @@
   ],
   "object_events": [
     {
-      "local_id": "LOCALID_PALLET_SIGN_LADY",
-      "type": "object",
-      "graphics_id": "OBJ_EVENT_GFX_WOMAN_1",
-      "x": 3,
-      "y": 10,
-      "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_WANDER_AROUND",
-      "movement_range_x": 1,
-      "movement_range_y": 4,
-      "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "0",
-      "script": "PalletTown_EventScript_SignLady",
-      "flag": "0"
-    },
-    {
       "local_id": "LOCALID_PALLET_FAT_MAN",
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_FAT_MAN",
@@ -70,6 +55,92 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "0x0",
       "flag": "FLAG_HIDE_OAK_IN_PALLET_TOWN"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_LITTLE_BOY",
+      "x": 24,
+      "y": 16,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_LEFT_AND_RIGHT",
+      "movement_range_x": 2,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Trainer_Adam",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_FISHER",
+      "x": 8,
+      "y": 16,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Fisher_PalletTown",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_PALLET_SIGN_LADY",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_WOMAN_3",
+      "x": 3,
+      "y": 17,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "PalletTown_EventScript_SignLady",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(DODUO)",
+      "x": 24,
+      "y": 17,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_UP",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Adam_Doduo",
+      "flag": "0"
+    },
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(PIDGEY)",
+      "x": 13,
+      "y": 10,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_WALK_IN_PLACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_MEW",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(MEW)",
+      "x": 9,
+      "y": 9,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_JOG_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "NULL",
+      "flag": "FLAG_MEW_CUTSCENE_DONE"
     }
   ],
   "warp_events": [
@@ -93,13 +164,34 @@
       "elevation": 0,
       "dest_map": "MAP_PALLET_TOWN_PROFESSOR_OAKS_LAB",
       "dest_warp_id": "0"
+    },
+    {
+      "x": 24,
+      "y": 12,
+      "elevation": 0,
+      "dest_map": "MAP_NPC_ADAM_HOUSE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 6,
+      "y": 14,
+      "elevation": 0,
+      "dest_map": "MAP_NEW_PLAYER_HOUSE",
+      "dest_warp_id": "0"
+    },
+    {
+      "x": 25,
+      "y": 4,
+      "elevation": 0,
+      "dest_map": "MAP_PALLET_HIDDEN_POTENTIAL",
+      "dest_warp_id": "0"
     }
   ],
   "coord_events": [
     {
       "type": "trigger",
-      "x": 12,
-      "y": 1,
+      "x": 9,
+      "y": 0,
       "elevation": 3,
       "var": "VAR_MAP_SCENE_PALLET_TOWN_OAK",
       "var_value": "0",
@@ -122,6 +214,15 @@
       "var": "VAR_TEMP_2",
       "var_value": "1",
       "script": "PalletTown_EventScript_SignLadyTrigger"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 9,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "PalletTown_MewCutscene"
     }
   ],
   "bg_events": [
@@ -136,7 +237,7 @@
     {
       "type": "sign",
       "x": 4,
-      "y": 7,
+      "y": 14,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "PalletTown_EventScript_PlayersHouseSign"
@@ -151,16 +252,24 @@
     },
     {
       "type": "sign",
-      "x": 9,
-      "y": 11,
+      "x": 22,
+      "y": 8,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "PalletTown_EventScript_TownSign"
     },
     {
       "type": "sign",
-      "x": 5,
-      "y": 14,
+      "x": 4,
+      "y": 7,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "NULL"
+    },
+    {
+      "type": "sign",
+      "x": 3,
+      "y": 18,
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "PalletTown_EventScript_TrainerTips"

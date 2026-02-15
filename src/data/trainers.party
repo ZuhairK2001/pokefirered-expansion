@@ -15414,3 +15414,93 @@ IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
 Muk
 Level: 39
 IVs: 6 HP / 6 Atk / 6 Def / 6 SpA / 6 SpD / 6 Spe
+
+=== TRAINER_ADAM ===
+Name: ADAM
+Class: Ninja Boy
+Pic: Ninja Boy
+Gender: Male
+Music: Male
+Double Battle: No
+AI: Check Bad Move
+
+Doduo
+Level: 3
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Pidgeotto
+Level: 5
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+
+=== TRAINER_SOPHIA ===
+Name: SOPHIA
+Class: Channeler
+Pic: Channeler
+Gender: Male
+Music: Suspicious
+Double Battle: No
+AI: Check Bad Move
+
+Psyduck
+Level: 12
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Gastly
+Level: 14
+IVs: 0 HP / 0 Atk / 0 Def / 10 SpA / 0 SpD / 0 Spe
+
+
+=== TRAINER_DEREK ===
+Name: DEREK
+Class: Tamer
+Pic: Tamer
+Gender: Male
+Music: Aqua
+Double Battle: No
+AI: Check Bad Move
+
+Beedrill
+Level: 11
+IVs: 0 HP / 0 Atk / 0 Def / 0 SpA / 0 SpD / 0 Spe
+
+Porygon
+Level: 12
+IVs: 0 HP / 0 Atk / 0 Def / 10 SpA / 0 SpD / 0 Spe
+
+
+=== TRAINER_ROUTE2_ELDER ===
+Name: KENZO
+Class: Expert
+Pic: Expert M
+Gender: Male
+Music: Intense
+Double Battle: No
+AI: Check Bad Move
+
+Slowpoke
+Level: 12
+Ability: Oblivious
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Confusion
+- Water Gun
+- Yawn
+- Curse
+
+Natu
+Level: 13
+Ability: Synchronize
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Peck
+- Night Shade
+- Calm Mind
+- Stored Power
+
+Meditite
+Level: 14
+Ability: Pure Power
+IVs: 25 HP / 25 Atk / 25 Def / 25 SpA / 25 SpD / 25 Spe
+- Confusion
+- Bulk Up
+- Force Palm
+- Detect

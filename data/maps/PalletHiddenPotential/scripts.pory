@@ -1,0 +1,38 @@
+
+mapscripts PalletHiddenPotential_MapScripts {
+    
+}
+
+script HP_Kadabra{
+    lock
+    applymovement(LOCALID_KADABRA, HP_Kadabra_Mov)
+    playmoncry(SPECIES_KADABRA, CRY_MODE_NORMAL)
+     msgbox("Kadabraaa...", MSGBOX_DEFAULT)
+    waitmoncry
+    release
+    end
+}
+
+script Channeler_HiddenPower {
+    lock
+    faceplayer
+    if (!flag(FLAG_RECEIVED_HIDDEN_POWER)) {
+        msgbox("Ah... I sense a strong bond\nbetween you and your POKéMON.\pThe spirits have guided me to\ngive you this...", MSGBOX_DEFAULT)
+        giveitem(ITEM_TM10)
+        if (var(VAR_RESULT) == FALSE) {
+            msgbox("You don't have room...\pCome back when you have space.", MSGBOX_DEFAULT)
+            release
+            end
+        }
+        setflag(FLAG_RECEIVED_HIDDEN_POWER)
+        msgbox("That is HIDDEN POWER.\pIts type changes depending on\nthe POKéMON's hidden strength!\pThe spirits reveal different\npowers to different POKéMON...", MSGBOX_DEFAULT)
+    } else {
+        msgbox("The spirits are always watching\nover you and your POKéMON...", MSGBOX_DEFAULT)
+    }
+    release
+    end
+}
+
+movement HP_Kadabra_Mov{
+    face_player
+}

@@ -1,0 +1,180 @@
+raw `
+ViridianForest_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, ViridianForest_OnTransition
+	.byte 0
+
+ViridianForest_OnTransition::
+	setworldmapflag FLAG_WORLD_MAP_VIRIDIAN_FOREST
+	end
+
+ViridianForest_EventScript_Youngster::
+	msgbox ViridianForest_Text_FriendsItchingToBattle, MSGBOX_NPC
+	end
+
+ViridianForest_EventScript_Boy::
+	msgbox ViridianForest_Text_RanOutOfPokeBalls, MSGBOX_NPC
+	end
+
+ViridianForest_EventScript_TrainerTips1::
+	msgbox ViridianForest_Text_AvoidGrassyAreasWhenWeak, MSGBOX_SIGN
+	end
+
+ViridianForest_EventScript_TrainerTips2::
+	msgbox ViridianForest_Text_UseAntidoteForPoison, MSGBOX_SIGN
+	end
+
+ViridianForest_EventScript_TrainerTips3::
+	msgbox ViridianForest_Text_ContactOakViaPCToRatePokedex, MSGBOX_SIGN
+	end
+
+ViridianForest_EventScript_TrainerTips4::
+	msgbox ViridianForest_Text_CantCatchOwnedMons, MSGBOX_SIGN
+	end
+
+ViridianForest_EventScript_TrainerTips5::
+	msgbox ViridianForest_Text_WeakenMonsBeforeCapture, MSGBOX_SIGN
+	end
+
+ViridianForest_EventScript_ExitSign::
+	msgbox ViridianForest_Text_LeavingViridianForest, MSGBOX_SIGN
+	end
+
+ViridianForest_EventScript_Rick::
+	trainerbattle_single TRAINER_BUG_CATCHER_RICK, ViridianForest_Text_RickIntro, ViridianForest_Text_RickDefeat
+	msgbox ViridianForest_Text_RickPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+ViridianForest_EventScript_Doug::
+	trainerbattle_single TRAINER_BUG_CATCHER_DOUG, ViridianForest_Text_DougIntro, ViridianForest_Text_DougDefeat
+	msgbox ViridianForest_Text_DougPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+ViridianForest_EventScript_Sammy::
+	trainerbattle_single TRAINER_BUG_CATCHER_SAMMY, ViridianForest_Text_SammyIntro, ViridianForest_Text_SammyDefeat
+	msgbox ViridianForest_Text_SammyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+ViridianForest_EventScript_Anthony::
+	trainerbattle_single TRAINER_BUG_CATCHER_ANTHONY, ViridianForest_Text_AnthonyIntro, ViridianForest_Text_AnthonyDefeat
+	msgbox ViridianForest_Text_AnthonyPostBattle, MSGBOX_AUTOCLOSE
+	end
+
+ViridianForest_EventScript_Charlie::
+	trainerbattle_single TRAINER_BUG_CATCHER_CHARLIE, ViridianForest_Text_CharlieIntro, ViridianForest_Text_CharlieDefeat
+	msgbox ViridianForest_Text_CharliePostBattle, MSGBOX_AUTOCLOSE
+	end
+`
+
+mapscripts  Viridian_ForestScripts {}
+
+script ViridianForest_ProtectiveRanger {
+    lock
+    faceplayer
+    msgbox("Hello. I'm a POKéMON RANGER from\nthe FIORE region.\pWhen I heard what SILPH CO. was\ndoing to VIRIDIAN FOREST, I had\pto come help.\pSee this grass patch? It looks\nsmall, but it's incredibly\pimportant.\pRare POKéMON live here that don't\nexist anywhere else in KANTO\panymore.\pWhen SILPH CO. bulldozed the west\nsection last year, most of their\ppopulation was wiped out.\pThis patch is their last refuge.\pI won't let them take this too.\pNot on my watch.", MSGBOX_DEFAULT)
+    release
+    end
+
+}
+
+script ViridianForest_EvolutionCamper{
+    lock
+    faceplayer
+    msgbox("You know what's crazy?\pThere used to be CATERPIE and\nWEEDLE everywhere in this forest.\pBut when SILPH CO. started\ntearing down trees last year,\psomething changed.\pMost of them evolved into METAPOD\nand KAKUNA almost immediately.\pIt's like... they knew they needed\nto protect themselves.\pNow the forest is full of\ncocoons, just waiting.\pWaiting to see if it's safe to\nemerge as BUTTERFREE and BEEDRILL.\pBut I don't think they feel safe\nanymore.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script ViridianForest_SurroundedWorker {
+    lock
+    faceplayer
+    msgbox("Where the hell is DEREK?!\pHe was supposed to bring the\nsurvey plans from ROUTE 2 an\phour ago!\pDid those protestors get to him\nor something?\pUgh... I can't do anything\nwithout those plans.\pLook, even if he shows up, it\ndoesn't matter.\pSILPH CO. will just buy out the\nlocal government eventually.\pThis whole protest thing? Waste\nof time.\pIn six months, this'll all be a\nparking lot.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+script ViridianForest_Protestor1 {
+    lock
+    faceplayer
+    msgbox("We're not letting him move!\pHe's been trying to survey this\narea for SILPH CO.!\pNot. Happening.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script ViridianForest_Protestor2 {
+    lock
+    faceplayer
+    msgbox("This guy thinks we'll just give\nup!\pWe've been here for MONTHS!\pWe're not going anywhere!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script ViridianForest_Protestor3 {
+    lock
+    faceplayer
+    msgbox("'Just a matter of time' he says!\pMaybe for him!\pBut we actually CARE about this\nplace!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+script ViridianForest_ProtestorPikachu {
+    lock
+    faceplayer
+    playmoncry(SPECIES_PIKACHU, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("The PIKACHU is standing with the\nprotestors!\pIt sparks angrily at the SILPH CO.\nworker whenever he tries to move.\pIt seems to understand what's at\nstake here.\pThis forest is its home too.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+script ViridianForest_SilphSurveySign {
+    msgbox("SILPH CO. DEVELOPMENT PROJECT\pSITE: VIRIDIAN FOREST - SECTOR 7\pPLANNED: Regional Office Complex\nEmployee Parking Structure\pConstruction Start: PENDING\pLand Acquisition: IN PROGRESS\p'Progress Through Innovation'", MSGBOX_SIGN)
+    end
+}
+
+// script ViridianForest_SilphWorkerLady {
+  //  trainerbattle_single(TRAINER_VIRIDIAN_FOREST_SILPH_LADY, SilphLady_IntroText, SilphLady_DefeatText)
+   // msgbox(SilphLady_PostBattle, MSGBOX_AUTOCLOSE)
+   // end
+//}
+
+//text SilphLady_IntroText {
+ //   "You're trespassing on SILPH\nCO property!$"
+//}
+
+//text SilphLady_DefeatText {
+ //   "This... this can't be!$"
+//}
+
+//text SilphLady_PostBattle {
+  //  "Fine! But this changes nothing!\pSILPH CO always gets what it\nwants!$"
+//}
+
+//script ViridianForest_SilphWorkerMan {
+  //  trainerbattle_single(TRAINER_VIRIDIAN_FOREST_SILPH_MAN, SilphMan_IntroText, SilphMan_DefeatText)
+    //msgbox(SilphMan_PostBattle, MSGBOX_AUTOCLOSE)
+    //end
+//}
+
+//text SilphMan_IntroText {
+ //   "Another protestor?\pTime to teach you a lesson!$"
+//}
+
+//text SilphMan_DefeatText {
+  //  "What?! No way!$"
+//}
+
+//text SilphMan_PostBattle {
+  //  "You got lucky.\pSILPH CO will still win in\nthe end.$"
+//}
+
+//script ViridianForest_Bugsy {
+  //  lock
+    //faceplayer
+    //msgbox("I'm BUGSY, from AZALEA TOWN.\pI... I can't believe what they've\ndone here.\pVIRIDIAN FOREST used to be\nlegendary. BUG TRAINERS from all\pover the world talked about it.\pAnd now...\pLook at it. The stumps. The\nsilence. The terrified POKéMON.\pIn JOHTO, we'd never let this\nhappen to ILEX FOREST.\pBut here, SILPH CO. just...\nthey don't care.\pI feel sick.", MSGBOX_NPC)
+    //release
+    //end
+//}
+

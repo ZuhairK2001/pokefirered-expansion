@@ -444,6 +444,7 @@ enum TrainerClassID
 #define FACILITY_CLASS_ELITE_FOUR_AGATHA      147
 #define FACILITY_CLASS_ELITE_FOUR_LANCE       148
 #define FACILITY_CLASS_CHAMPION_RIVAL_2       149
+//#define TRAINER_ADAM                          743
 
 #define F_TRAINER_FEMALE (1 << 7)
 

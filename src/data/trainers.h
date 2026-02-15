@@ -39626,3 +39626,221 @@
             },
         },
     },
+#line 15418
+    [DIFFICULTY_NORMAL][TRAINER_ADAM] =
+    {
+#line 15419
+        .trainerName = _("ADAM"),
+#line 15420
+        .trainerClass = TRAINER_CLASS_NINJA_BOY,
+#line 15421
+        .trainerPic = TRAINER_PIC_NINJA_BOY,
+        .encounterMusic_gender =
+#line 15423
+            TRAINER_ENCOUNTER_MUSIC_MALE,
+#line 15424
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 15425
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_NINJA_BOY,
+        .partySize = 2,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 15427
+            .species = SPECIES_DODUO,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15429
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
+#line 15428
+            .lvl = 3,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 15431
+            .species = SPECIES_PIDGEOTTO,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15433
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
+#line 15432
+            .lvl = 5,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 15436
+    [DIFFICULTY_NORMAL][TRAINER_SOPHIA] =
+    {
+#line 15437
+        .trainerName = _("SOPHIA"),
+#line 15438
+        .trainerClass = TRAINER_CLASS_CHANNELER,
+#line 15439
+        .trainerPic = TRAINER_PIC_CHANNELER,
+        .encounterMusic_gender =
+#line 15441
+            TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS,
+#line 15442
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 15443
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_CHANNELER,
+        .partySize = 2,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 15445
+            .species = SPECIES_PSYDUCK,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15447
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
+#line 15446
+            .lvl = 12,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 15449
+            .species = SPECIES_GASTLY,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15451
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 10, 0),
+#line 15450
+            .lvl = 14,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 15454
+    [DIFFICULTY_NORMAL][TRAINER_DEREK] =
+    {
+#line 15455
+        .trainerName = _("DEREK"),
+#line 15456
+        .trainerClass = TRAINER_CLASS_TAMER,
+#line 15457
+        .trainerPic = TRAINER_PIC_TAMER,
+        .encounterMusic_gender =
+#line 15459
+            TRAINER_ENCOUNTER_MUSIC_AQUA,
+#line 15460
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 15461
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_TAMER,
+        .partySize = 2,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 15463
+            .species = SPECIES_BEEDRILL,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15465
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 0, 0),
+#line 15464
+            .lvl = 11,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+            {
+#line 15467
+            .species = SPECIES_PORYGON,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15469
+            .iv = TRAINER_PARTY_IVS(0, 0, 0, 0, 10, 0),
+#line 15468
+            .lvl = 12,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            },
+        },
+    },
+#line 15472
+    [DIFFICULTY_NORMAL][TRAINER_ROUTE2_ELDER] =
+    {
+#line 15473
+        .trainerName = _("KENZO"),
+#line 15474
+        .trainerClass = TRAINER_CLASS_EXPERT,
+#line 15475
+        .trainerPic = TRAINER_PIC_EXPERT_M,
+        .encounterMusic_gender =
+#line 15477
+            TRAINER_ENCOUNTER_MUSIC_INTENSE,
+#line 15478
+        .battleType = TRAINER_BATTLE_TYPE_SINGLES,
+#line 15479
+        .aiFlags = AI_FLAG_CHECK_BAD_MOVE,
+#line 0
+        .trainerBackPic = TRAINER_PIC_EXPERT_M,
+        .partySize = 3,
+        .party = (const struct TrainerMon[])
+        {
+            {
+#line 15481
+            .species = SPECIES_SLOWPOKE,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15484
+            .iv = TRAINER_PARTY_IVS(25, 25, 25, 25, 25, 25),
+#line 15483
+            .ability = ABILITY_OBLIVIOUS,
+#line 15482
+            .lvl = 12,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 15485
+                MOVE_CONFUSION,
+                MOVE_WATER_GUN,
+                MOVE_YAWN,
+                MOVE_CURSE,
+            },
+            },
+            {
+#line 15490
+            .species = SPECIES_NATU,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15493
+            .iv = TRAINER_PARTY_IVS(25, 25, 25, 25, 25, 25),
+#line 15492
+            .ability = ABILITY_SYNCHRONIZE,
+#line 15491
+            .lvl = 13,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 15494
+                MOVE_PECK,
+                MOVE_NIGHT_SHADE,
+                MOVE_CALM_MIND,
+                MOVE_STORED_POWER,
+            },
+            },
+            {
+#line 15499
+            .species = SPECIES_MEDITITE,
+            .gender = TRAINER_MON_RANDOM_GENDER,
+#line 15502
+            .iv = TRAINER_PARTY_IVS(25, 25, 25, 25, 25, 25),
+#line 15501
+            .ability = ABILITY_PURE_POWER,
+#line 15500
+            .lvl = 14,
+            .nature = NATURE_HARDY,
+            .dynamaxLevel = MAX_DYNAMAX_LEVEL,
+            .moves = {
+#line 15503
+                MOVE_CONFUSION,
+                MOVE_BULK_UP,
+                MOVE_FORCE_PALM,
+                MOVE_DETECT,
+            },
+            },
+        },
+    },

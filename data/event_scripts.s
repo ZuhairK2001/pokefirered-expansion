@@ -1369,3 +1369,27 @@ Text_TestMsg::
 	.include "data/text/pokedude.inc"
 	.include "data/scripts/follower.inc"
 	.include "data/scripts/dexnav.inc"
+
+	.include "data/maps/NpcAdamHouse/scripts.inc"
+	.include "data/maps/NpcAdamHouse/text.inc"
+
+	.include "data/maps/NewPlayerHouse/scripts.inc"
+	.include "data/maps/NewPlayerHouse/text.inc"
+
+	.include "data/maps/NewPlayerHouseUpperFlow/scripts.inc"
+	.include "data/maps/NewPlayerHouseUpperFlow/text.inc"
+
+	.include "data/maps/PalletHiddenPotential/scripts.inc"
+	.include "data/maps/PalletHiddenPotential/text.inc"
+
+	.include "data/maps/ViridanHouse/scripts.inc"
+	.include "data/maps/ViridanHouse/text.inc"
+
+	.include "data/maps/ViridianMansion/scripts.inc"
+	.include "data/maps/ViridianMansion/text.inc"
+
+	.include "data/maps/ViridianMansion2/scripts.inc"
+	.include "data/maps/ViridianMansion2/text.inc"
+
+	.include "data/maps/ViridianSilphBuilding/scripts.inc"
+	.include "data/maps/ViridianSilphBuilding/text.inc"

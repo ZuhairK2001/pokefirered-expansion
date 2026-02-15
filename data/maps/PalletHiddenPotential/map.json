@@ -1,0 +1,59 @@
+{
+  "id": "MAP_PALLET_HIDDEN_POTENTIAL",
+  "name": "PalletHiddenPotential",
+  "layout": "LAYOUT_PALLET_HIDDEN_POTENTIAL",
+  "music": "MUS_PALLET",
+  "region_map_section": "MAPSEC_PALLET_TOWN",
+  "requires_flash": false,
+  "weather": "WEATHER_NONE",
+  "map_type": "MAP_TYPE_NONE",
+  "allow_cycling": false,
+  "allow_escaping": false,
+  "allow_running": false,
+  "show_map_name": true,
+  "floor_number": 0,
+  "battle_scene": "MAP_BATTLE_SCENE_NORMAL",
+  "connections": null,
+  "object_events": [
+    {
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_CHANNELER",
+      "x": 5,
+      "y": 3,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_NONE",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "Channeler_HiddenPower",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_KADABRA",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_SPECIES(KADABRA)",
+      "x": 4,
+      "y": 3,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_JOG_IN_PLACE_DOWN",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "HP_Kadabra",
+      "flag": "0"
+    }
+  ],
+  "warp_events": [
+    {
+      "x": 2,
+      "y": 9,
+      "elevation": 0,
+      "dest_map": "MAP_PALLET_TOWN",
+      "dest_warp_id": "5"
+    }
+  ],
+  "coord_events": [],
+  "bg_events": []
+}

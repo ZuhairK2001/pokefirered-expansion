@@ -1,0 +1,97 @@
+raw `
+Route1_MapScripts::
+	.byte 0
+
+Route1_EventScript_MartClerk::
+	lock
+	faceplayer
+	goto_if_set FLAG_GOT_POTION_ON_ROUTE_1, Route1_EventScript_AlreadyGotPotion
+	msgbox Route1_Text_WorkAtPokeMartTakeSample
+	textcolor NPC_TEXT_COLOR_NEUTRAL
+	checkitemspace ITEM_POTION
+	goto_if_eq VAR_RESULT, FALSE, EventScript_BagIsFull
+	bufferitemname STR_VAR_2, ITEM_POTION
+	playfanfare MUS_LEVEL_UP
+	message Text_ObtainedTheX
+	waitmessage
+	waitfanfare
+	additem ITEM_POTION
+	msgbox Route1_Text_PutPotionAway
+	call EventScript_RestorePrevTextColor
+	setflag FLAG_GOT_POTION_ON_ROUTE_1
+	release
+	end
+
+Route1_EventScript_AlreadyGotPotion::
+	msgbox Route1_Text_ComeSeeUsIfYouNeedPokeBalls
+	release
+	end
+
+Route1_EventScript_Boy::
+	msgbox Route1_Text_CanJumpFromLedges, MSGBOX_NPC
+	end
+
+Route1_EventScript_RouteSign::
+	msgbox Route1_Text_RouteSign, MSGBOX_SIGN
+	end
+
+`
+
+mapscripts Route1_Scripts {}
+
+script Route1_GreatBall {
+    lock
+
+    // Try to give the item
+    giveitem(ITEM_GREAT_BALL, 1)
+    if (var(VAR_RESULT) == 0) {
+        // Bag full
+        msgbox("Your BAG is full!", MSGBOX_DEFAULT)
+        release
+        end
+    }
+   
+    removeobject(3)
+    // If we got here, the GREAT BALL was obtained successfully.
+    // This flag should be tied to the item ball in the map so it disappears.
+    setflag(FLAG_ROUTE1_GREAT_BALL)
+
+    release
+    end
+}
+
+script Route1_MartGuy {
+    lock
+    faceplayer
+    if (!flag(FLAG_RECEIVED_ROUTE1_POKEBALLS)) {
+        msgbox("Hi! I work at the POKé MART.\pIt's a convenient shop, so please\nvisit us in VIRIDIAN CITY.\pI know, I'll give you a sample\nof our products!", MSGBOX_DEFAULT)
+        giveitem(ITEM_POKE_BALL, 10)
+        if (var(VAR_RESULT) == FALSE) {
+            msgbox("Oh! You don't have room.\pCome back when you have space.", MSGBOX_DEFAULT)
+            release
+            end
+        }
+        setflag(FLAG_RECEIVED_ROUTE1_POKEBALLS)
+        msgbox("We also carry POTIONs and other\nuseful items!", MSGBOX_DEFAULT)
+    } else {
+        msgbox("Our POKé MART in VIRIDIAN CITY\nhas everything you need!", MSGBOX_DEFAULT)
+    }
+    release
+    end
+}
+
+script Route1_SilphWorker {
+    lock
+    faceplayer
+    msgbox("SILPH CO. sent me to assess\nPALLET TOWN's potential.\pAll that undeveloped land...\nIt's worth millions!\pToo bad PROF. OAK won't sell.\pFor now, anyway.", MSGBOX_NPC)
+    release
+    end
+}
+
+script Route1_ObservantBoy {
+    lock
+    faceplayer
+    msgbox("Hmm... There's way more CATERPIE\nand WEEDLE here than usual.\pI wonder if it has something to\ndo with all that construction in\lVIRIDIAN FOREST?\pPoor POKéMON...", MSGBOX_NPC)
+    release
+    end
+}

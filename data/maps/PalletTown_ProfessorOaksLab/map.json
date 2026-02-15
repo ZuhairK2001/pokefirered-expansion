@@ -26,7 +26,7 @@
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PalletTown_ProfessorOaksLab_EventScript_Aide1",
+      "script": "OaksLab_Aide1",
       "flag": "0"
     },
     {
@@ -46,15 +46,15 @@
     {
       "type": "object",
       "graphics_id": "OBJ_EVENT_GFX_SCIENTIST",
-      "x": 11,
-      "y": 10,
+      "x": 14,
+      "y": 8,
       "elevation": 3,
-      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_type": "MOVEMENT_TYPE_FACE_UP",
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
-      "script": "PalletTown_ProfessorOaksLab_EventScript_Aide2",
+      "script": "OaksLab_Aide2",
       "flag": "0"
     },
     {
@@ -161,6 +161,36 @@
       "trainer_sight_or_berry_tree_id": "0",
       "script": "PalletTown_ProfessorOaksLab_EventScript_Pokedex",
       "flag": "FLAG_HIDE_POKEDEX"
+    },
+    {
+      "local_id": "LOCALID_SCIENTIST",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_SUPER_NERD",
+      "x": 14,
+      "y": 10,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_RIGHT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "OaksLab_SuperScientist",
+      "flag": "0"
+    },
+    {
+      "local_id": "LOCALID_ASSISTANT",
+      "type": "object",
+      "graphics_id": "OBJ_EVENT_GFX_WORKER_F",
+      "x": 9,
+      "y": 10,
+      "elevation": 0,
+      "movement_type": "MOVEMENT_TYPE_FACE_LEFT",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "OaksLab_Assistant",
+      "flag": "0"
     }
   ],
   "warp_events": [
@@ -240,25 +270,18 @@
       "var": "VAR_MAP_SCENE_PALLET_TOWN_PROFESSOR_OAKS_LAB",
       "var_value": "3",
       "script": "PalletTown_ProfessorOaksLab_EventScript_RivalBattleTriggerRight"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 11,
+      "elevation": 0,
+      "var": "VAR_TEMP_0",
+      "var_value": "0",
+      "script": "OaksLab_PokedexRewardsIntro"
     }
   ],
   "bg_events": [
-    {
-      "type": "sign",
-      "x": 2,
-      "y": 1,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PalletTown_ProfessorOaksLab_EventScript_Computer"
-    },
-    {
-      "type": "sign",
-      "x": 3,
-      "y": 1,
-      "elevation": 0,
-      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
-      "script": "PalletTown_ProfessorOaksLab_EventScript_Computer"
-    },
     {
       "type": "sign",
       "x": 6,
@@ -274,6 +297,22 @@
       "elevation": 0,
       "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
       "script": "PalletTown_ProfessorOaksLab_EventScript_RightSign"
+    },
+    {
+      "type": "sign",
+      "x": 3,
+      "y": 1,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "PalletTown_ProfessorOaksLab_EventScript_Computer"
+    },
+    {
+      "type": "sign",
+      "x": 2,
+      "y": 1,
+      "elevation": 0,
+      "player_facing_dir": "BG_EVENT_PLAYER_FACING_ANY",
+      "script": "PalletTown_ProfessorOaksLab_EventScript_Computer"
     }
   ]
 }
