@@ -157,7 +157,6 @@ static void Task_AngledWipes(u8 taskId);
 static void Task_Mugshot(u8 taskId);
 static void Task_Spiral(u8 taskId);
 static void Task_Intro(u8 taskId);
-static void Task_BattleTransition_Intro(u8 taskId);
 
 static void SpriteCB_MugshotTrainerPic(struct Sprite *sprite);
 static void SpriteCB_FldEffPokeballTrail(struct Sprite *sprite);
@@ -431,7 +430,7 @@ static const TransitionStateFunc sTransitionIntroFuncs[] =
 static const struct SpriteFrameImage sSpriteImage_Pokeball[] =
 {
     {
-        .data = sSlidingPokeball_Gfx, 
+        .data = sSlidingPokeball_Gfx,
         .size = sizeof(sSlidingPokeball_Gfx),
     },
 };
@@ -572,14 +571,14 @@ static const u16 sUnusedTrainerPalette[] = INCBIN_U16("graphics/battle_transitio
 
 static const struct SpritePalette sSpritePalette_UnusedTrainer =
 {
-    .data = sUnusedTrainerPalette, 
+    .data = sUnusedTrainerPalette,
     .tag = PALTAG_UNUSED_MUGSHOT,
 };
 
 static const u16 sBigPokeball_Tilemap[] = INCBIN_U16("graphics/battle_transitions/big_pokeball_tilemap.bin");
 static const u16 sMugshotsTilemap[] = INCBIN_U16("graphics/battle_transitions/vsbar_tilemap.bin");
 
-void BattleTransition_StartOnField(u8 transitionId)
+void BattleTransition_StartOnField(enum BattleTransition transitionId)
 {
     sTransitionData = AllocZeroed(sizeof(*sTransitionData));
     gMain.callback2 = CB2_OverworldBasic;
@@ -619,6 +618,9 @@ static void Task_BattleTransition(u8 taskId)
 static bool8 Transition_StartIntro(struct Task *task)
 {
     SetWeatherScreenFadeOut();
+    // cause all shadow sprites to destroy themselves,
+    // freeing up sprite slots for the transition
+    gWeatherPtr->noShadows = TRUE;
     CpuCopy32(gPlttBufferFaded, gPlttBufferUnfaded, PLTT_SIZE);
     if (sTasks_Intro[task->tTransitionId] != NULL)
     {
@@ -774,7 +776,7 @@ static void VBlankCB_Swirl(void)
 static void HBlankCB_Swirl(void)
 {
     s16 offset = gScanlineEffectRegBuffers[1][REG_VCOUNT];
-    
+
     REG_BG1HOFS = offset;
     REG_BG2HOFS = offset;
     REG_BG3HOFS = offset;
@@ -838,7 +840,7 @@ static void VBlankCB_Shuffle(void)
 static void HBlankCB_Shuffle(void)
 {
     s16 offset = gScanlineEffectRegBuffers[1][REG_VCOUNT];
-    
+
     REG_BG1VOFS = offset;
     REG_BG2VOFS = offset;
     REG_BG3VOFS = offset;
@@ -873,24 +875,27 @@ static void Task_BigPokeball(u8 taskId)
 }
 
 // Separate function in Emerald
-#define InitPatternWeaveTransition(task) \
-{ \
-    u16 i; \
-    InitTransitionData(); \
-    ScanlineEffect_Clear(); \
-    (task)->tBlendTarget1 = 16; \
-    (task)->tBlendTarget2 = 0; \
-    (task)->tSinIndex = 0; \
-    (task)->tAmplitude = 0x4000; \
-    sTransitionData->winIn = WININ_WIN0_ALL; \
-    sTransitionData->winOut = 0; \
-    sTransitionData->win0H = DISPLAY_WIDTH; \
-    sTransitionData->win0V = DISPLAY_HEIGHT; \
-    sTransitionData->bldCnt = BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL; \
-    sTransitionData->bldAlpha = BLDALPHA_BLEND((task)->tBlendTarget2, (task)->tBlendTarget1); \
-    for (i = 0; i < DISPLAY_HEIGHT; i++) \
-        gScanlineEffectRegBuffers[1][i] = DISPLAY_WIDTH; \
-    SetVBlankCallback(VBlankCB_PatternWeave); \
+static void InitPatternWeaveTransition(struct Task *task)
+{
+    u16 i;
+    InitTransitionData();
+    ScanlineEffect_Clear();
+    task->tBlendTarget1 = 16;
+    task->tBlendTarget2 = 0;
+    task->tSinIndex = 0;
+    task->tAmplitude = 0x4000;
+    sTransitionData->winIn = WININ_WIN0_ALL;
+    sTransitionData->winOut = 0;
+    sTransitionData->win0H = DISPLAY_WIDTH;
+    sTransitionData->win0V = DISPLAY_HEIGHT;
+    sTransitionData->bldCnt = BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_ALL;
+    sTransitionData->bldAlpha = BLDALPHA_BLEND((task)->tBlendTarget2, (task)->tBlendTarget1);
+    UpdateShadowColor(RGB_GRAY);
+
+    for (i = 0; i < DISPLAY_HEIGHT; i++)
+        gScanlineEffectRegBuffers[1][i] = DISPLAY_WIDTH;
+
+    SetVBlankCallback(VBlankCB_PatternWeave);
 }
 
 static bool8 BigPokeball_Init(struct Task *task)
@@ -936,7 +941,7 @@ static bool8 PatternWeave_Blend1(struct Task *task)
         task->tState++;
     task->tSinIndex += 12;
     task->tAmplitude -= 384;
-    // Assign a very high frequency value so that 2 adjacent values in gScanlineEffectRegBuffers[0] will have different sign. 
+    // Assign a very high frequency value so that 2 adjacent values in gScanlineEffectRegBuffers[0] will have different sign.
     SetSinWave((s16*)gScanlineEffectRegBuffers[0], 0, task->tSinIndex, 132, task->tAmplitude >> 8, DISPLAY_HEIGHT);
     sTransitionData->vblankDma++;
     return FALSE;
@@ -1113,7 +1118,7 @@ static bool8 PokeballsTrail_End(struct Task *task)
 u32 FldEff_Pokeball(void)
 {
     u8 spriteId;
-    
+
     FieldEffectScript_LoadPal(&gSpritePalette_Pokeball);
     spriteId = CreateSpriteAtEnd(&sSpriteTemplate_Pokeball, gFieldEffectArguments[0], gFieldEffectArguments[1], 0);
     gSprites[spriteId].oam.priority = 0;
@@ -1273,16 +1278,16 @@ static bool8 ClockwiseWipe_Bottom(struct Task *task)
 }
 
 /*
- * BUG: The following 2 functions are incorrect. The animation after 
- * the rotation angle reaches 1.5π will not be displayed. 
+ * BUG: The following 2 functions are incorrect. The animation after
+ * the rotation angle reaches 1.5π will not be displayed.
  *
- * There're 2 problems which need to be solved in order to correct the logic. 
+ * There're 2 problems which need to be solved in order to correct the logic.
  * 1. With current setup, nothing is displayed inside WIN0 and everything
  * is displayed outside WIN0. Thus, if the rotation angle is > 1.5π, it
- * won't be able to handle the situation. 
+ * won't be able to handle the situation.
  * 2. The programmer sometimes swapped the place of start and end boundary
  * of WIN0 (see variables start and end), which will sometimes cause end
- * to be smaller than start. In this way, garbage data will be written to WIN0H. 
+ * to be smaller than start. In this way, garbage data will be written to WIN0H.
  */
 static bool8 ClockwiseWipe_Left(struct Task *task)
 {
@@ -1434,7 +1439,7 @@ static void VBlankCB_Ripple(void)
 static void HBlankCB_Ripple(void)
 {
     s16 offset = gScanlineEffectRegBuffers[1][REG_VCOUNT];
-    
+
     REG_BG1VOFS = offset;
     REG_BG2VOFS = offset;
     REG_BG3VOFS = offset;
@@ -1843,7 +1848,7 @@ static bool8 Mugshot_SetGfx(struct Task *task)
     u16 *tilemap, *tileset;
     const u16 *mugshotsMap = sMugshotsTilemap;
     u8 mugshotColor = GetTrainerMugshotColorFromId(TRAINER_BATTLE_PARAM.opponentA);
-    
+
     GetBg0TilesDst(&tilemap, &tileset);
     CpuCopy16(sMugshotBanner_Gfx, tileset, sizeof(sMugshotBanner_Gfx));
 
@@ -1852,7 +1857,7 @@ static bool8 Mugshot_SetGfx(struct Task *task)
 
     LoadPalette(sOpponentMugshotsPals[mugshotColor], BG_PLTT_ID(15), PLTT_SIZE_4BPP);
     LoadPalette(sPlayerMugshotsPals[gSaveBlock2Ptr->playerGender], BG_PLTT_ID(15) + 10, PLTT_SIZEOF(16 - 10));
-    
+
     for (i = 0; i < 20; i++)
         for (j = 0; j < 32; j++, mugshotsMap++)
             SET_TILE(tilemap, i, j, *mugshotsMap);
@@ -2096,11 +2101,11 @@ static void Mugshots_CreateTrainerPics(struct Task *task)
     task->tOpponentSpriteId = CreateTrainerSprite(trainerId,
                                                   gTrainerSprites[trainerId].mugshotCoords.x - 32,
                                                   gTrainerSprites[trainerId].mugshotCoords.y + 42,
-                                                  0, gDecompressionBuffer);
+                                                  0, NULL);
     task->tPlayerSpriteId = CreateTrainerSprite(PlayerGenderToFrontTrainerPicId(gSaveBlock2Ptr->playerGender),
                                                 DISPLAY_WIDTH + 32,
                                                 106,
-                                                0, gDecompressionBuffer);
+                                                0, NULL);
     gReservedSpritePaletteCount = 12;
 
     opponentSprite = &gSprites[task->tOpponentSpriteId];
@@ -2274,7 +2279,7 @@ static bool8 Slice_Main(struct Task *task)
     {
         u16 *ofsBuffer = &gScanlineEffectRegBuffers[0][i];
         u16 *win0HBuffer = &gScanlineEffectRegBuffers[0][i + DISPLAY_HEIGHT];
-        
+
         // Alternate rows
         if (i & 1)
         {
@@ -2316,7 +2321,7 @@ static void VBlankCB_Slice(void)
 static void HBlankCB_Slice(void)
 {
     s16 offset = gScanlineEffectRegBuffers[1][REG_VCOUNT];
-    
+
     REG_BG1HOFS = offset;
     REG_BG2HOFS = offset;
     REG_BG3HOFS = offset;
@@ -2479,7 +2484,7 @@ static void SpriteCB_WhiteBarFade(struct Sprite *sprite)
         // Each bar is 27 pixels high. With 6 bars this is a total of 162, which is 2 pixels taller than the screen.
         // 1 bar is therefore shortened by 2 pixels
         u32 stripeWidth = sprite->sIsMainSprite ? (WHITE_BAR_HEIGHT - 2) : WHITE_BAR_HEIGHT;
-        
+
         for (i = 0; i < stripeWidth; i++)
         {
             bldY[i] = sprite->sFade >> 8;
@@ -2709,6 +2714,8 @@ static void VBlankCB_AngledWipes(void)
 #define tFadeFromGraySpeed data[5]
 #define tDelayTimer        data[6]
 #define tBlend             data[7]
+#define tBldCntSaved           data[8]
+#define tShadowColor           data[9]
 
 static void CreateIntroTask(s16 fadeToGrayDelay, s16 fadeFromGrayDelay, s16 numFades, s16 fadeToGraySpeed, s16 fadeFromGraySpeed)
 {
@@ -2729,24 +2736,35 @@ static bool8 IsIntroTaskDone(void)
         return FALSE;
 }
 
-static void Task_BattleTransition_Intro(u8 taskId)
+void Task_BattleTransition_Intro(u8 taskId)
 {
     while (sTransitionIntroFuncs[gTasks[taskId].tState](&gTasks[taskId]));
 }
 
 static bool8 TransitionIntro_FadeToGray(struct Task *task)
 {
+    u8 paletteNum = IndexOfSpritePaletteTag(TAG_WEATHER_START);
+    u16 index = OBJ_PLTT_ID(paletteNum) + SHADOW_COLOR_INDEX;
     if (task->tDelayTimer == 0 || --task->tDelayTimer == 0)
     {
         task->tDelayTimer = task->tFadeToGrayDelay;
         task->tBlend += task->tFadeToGraySpeed;
         if (task->tBlend > 16)
             task->tBlend = 16;
+        if (paletteNum < 16)
+            task->tShadowColor = gPlttBufferFaded[index];
         BlendPalettes(-1, task->tBlend, RGB(11, 11, 11));
+        if (paletteNum < 16)
+            gPlttBufferFaded[index] = task->tShadowColor;
     }
     if (task->tBlend >= 16)
     {
         // Fade to gray complete, start fade back
+        // Save BLDCNT and turn off targets temporarily
+        task->tBldCntSaved = GetGpuReg(REG_OFFSET_BLDCNT);
+        SetGpuReg(REG_OFFSET_BLDCNT, task->tBldCntSaved & ~BLDCNT_TGT2_BG_ALL);
+        if (paletteNum < 16)
+            gPlttBufferFaded[index] = RGB(11, 11, 11);
         task->tState++;
         task->tDelayTimer = task->tFadeFromGrayDelay;
     }
@@ -2757,11 +2775,19 @@ static bool8 TransitionIntro_FadeFromGray(struct Task *task)
 {
     if (task->tDelayTimer == 0 || --task->tDelayTimer == 0)
     {
+        u8 paletteNum = IndexOfSpritePaletteTag(TAG_WEATHER_START);
         task->tDelayTimer = task->tFadeFromGrayDelay;
         task->tBlend -= task->tFadeFromGraySpeed;
         if (task->tBlend < 0)
             task->tBlend = 0;
         BlendPalettes(PALETTES_ALL, task->tBlend, RGB(11, 11, 11));
+        // Restore BLDCNT
+        SetGpuReg(REG_OFFSET_BLDCNT, task->tBldCntSaved);
+        if (paletteNum < 16)
+        {
+            u16 index = OBJ_PLTT_ID(paletteNum) + SHADOW_COLOR_INDEX;
+            gPlttBufferFaded[index] = task->tShadowColor;
+        }
     }
     if (task->tBlend == 0)
     {
@@ -2787,6 +2813,8 @@ static bool8 TransitionIntro_FadeFromGray(struct Task *task)
 #undef tFadeFromGraySpeed
 #undef tDelayTimer
 #undef tBlend
+#undef tBldCntSaved
+#undef tShadowColor
 
 //-----------------------------------
 // General transition functions
@@ -2849,9 +2877,9 @@ static void SetCircularMask(s16 *buffer, s16 x, s16 y, s16 radius)
     {
         s16 sinResult, cosResult, leftX, topY, bottomY, nextTopY, nextBottomY, winVal;
 
-        // The loop variable i here does not stand for rotation angle, 
-        // but is the angle between segment (center, pointOnCircle) 
-        // and vertical line.   
+        // The loop variable i here does not stand for rotation angle,
+        // but is the angle between segment (center, pointOnCircle)
+        // and vertical line.
         sinResult = Sin(i, radius);
         cosResult = Cos(i, radius);
         leftX = x - sinResult;
@@ -2923,7 +2951,7 @@ static bool8 UpdateBlackWipe(s16 *data, bool8 xExact, bool8 yExact)
     {
         // X has further to move, move it first
         tWipeCurrX += tWipeXMove;
-        
+
         // If it has been far enough since Y's
         // last move then move it too
         tWipeTemp += tWipeYDist;
@@ -2937,7 +2965,7 @@ static bool8 UpdateBlackWipe(s16 *data, bool8 xExact, bool8 yExact)
     {
         // Y has further to move, move it first
         tWipeCurrY += tWipeYMove;
-        
+
         // If it has been far enough since X's
         // last move then move it too
         tWipeTemp += tWipeXDist;

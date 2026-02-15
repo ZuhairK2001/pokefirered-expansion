@@ -1,13 +1,13 @@
 #include "global.h"
-#include "gflib.h"
+#include "battle_special.h"
 #include "decompress.h"
-#include "overworld.h"
-#include "script.h"
-#include "battle_tower.h"
+#include "malloc.h"
 #include "mystery_event_script.h"
-#include "mystery_gift.h"
 #include "mystery_gift_client.h"
 #include "mystery_gift_server.h"
+#include "mystery_gift.h"
+#include "overworld.h"
+#include "script.h"
 
 enum {
     FUNC_INIT,
@@ -232,12 +232,12 @@ static u32 Client_Run(struct MysteryGiftClient * client)
         break;
     case CLI_RECV_EREADER_TRAINER:
 #if FREE_BATTLE_TOWER_E_READER == FALSE
-        memcpy(&gSaveBlock2Ptr->battleTower.ereaderTrainer, client->recvBuffer, sizeof(gSaveBlock2Ptr->battleTower.ereaderTrainer));
+        memcpy(&gSaveBlock2Ptr->frontier.ereaderTrainer, client->recvBuffer, sizeof(gSaveBlock2Ptr->frontier.ereaderTrainer));
         ValidateEReaderTrainer();
 #endif //FREE_BATTLE_TOWER_E_READER
         break;
     case CLI_RUN_BUFFER_SCRIPT:
-        memcpy(gDecompressionBuffer, client->recvBuffer, MG_LINK_BUFFER_SIZE);
+        memcpy(client->bufferScript, client->recvBuffer, MG_LINK_BUFFER_SIZE);
         client->funcId = FUNC_RUN_BUFFER;
         client->funcState = 0;
         break;
@@ -277,7 +277,7 @@ static u32 Client_RunMysteryEventScript(struct MysteryGiftClient * client)
 
 static u32 Client_RunBufferScript(struct MysteryGiftClient * client)
 {
-    u32 (*func)(u32 *, struct SaveBlock2 *, struct SaveBlock1 *) = (void *)gDecompressionBuffer;
+    u32 (*func)(u32 *, struct SaveBlock2 *, struct SaveBlock1 *) = (void *)client->bufferScript;
     if (func(&client->param, gSaveBlock2Ptr, gSaveBlock1Ptr) == 1)
     {
         client->funcId = FUNC_RUN;

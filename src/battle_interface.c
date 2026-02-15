@@ -22,44 +22,139 @@
 #define abs(a) ((a) < 0 ? -(a) : (a))
 
 // These are used as indexes for each "section of tiles" in gBattleInterface_Gfx
-#define B_INTERFACE_GFX_TRANSPARENT             0
-#define B_INTERFACE_GFX_HP_BAR_HP_TEXT          1
-#define B_INTERFACE_GFX_HP_BAR_GREEN            3
-#define B_INTERFACE_GFX_EXP_BAR                 12
-#define B_INTERFACE_GFX_STATUS_PSN_BATTLER0     21 // BATTLER0: B_POSITION_PLAYER_LEFT
-#define B_INTERFACE_GFX_STATUS_PAR_BATTLER0     24
-#define B_INTERFACE_GFX_STATUS_SLP_BATTLER0     27
-#define B_INTERFACE_GFX_STATUS_FRZ_BATTLER0     30
-#define B_INTERFACE_GFX_STATUS_BRN_BATTLER0     33
-// tiles 36 through 38 are unused
-#define B_INTERFACE_GFX_STATUS_NONE             39
-// tiles 40 through 42 are unused
-#define B_INTERFACE_GFX_SAFARI_HEALTHBOX_0      43
-#define B_INTERFACE_GFX_SAFARI_HEALTHBOX_1      44
-#define B_INTERFACE_GFX_SAFARI_HEALTHBOX_2      45
-// tile 46 is unused
-#define B_INTERFACE_GFX_HP_BAR_YELLOW           47
-#define B_INTERFACE_GFX_HP_BAR_RED              56
-#define B_INTERFACE_GFX_HP_BAR_LEFT_BORDER      65 // Used in place of the HP text graphic if the pokemon is statused
-#define B_INTERFACE_GFX_BALL_PARTY_SUMMARY      66
-#define B_INTERFACE_GFX_BALL_CAUGHT             70
-#define B_INTERFACE_GFX_STATUS_PSN_BATTLER1     71 // BATTLER1: B_POSITION_OPPONENT_LEFT
-#define B_INTERFACE_GFX_STATUS_PAR_BATTLER1     74
-#define B_INTERFACE_GFX_STATUS_SLP_BATTLER1     77
-#define B_INTERFACE_GFX_STATUS_FRZ_BATTLER1     80
-#define B_INTERFACE_GFX_STATUS_BRN_BATTLER1     83
-#define B_INTERFACE_GFX_STATUS_PSN_BATTLER2     86 // BATTLER2: B_POSITION_PLAYER_RIGHT
-#define B_INTERFACE_GFX_STATUS_PAR_BATTLER2     89
-#define B_INTERFACE_GFX_STATUS_SLP_BATTLER2     92
-#define B_INTERFACE_GFX_STATUS_FRZ_BATTLER2     95
-#define B_INTERFACE_GFX_STATUS_BRN_BATTLER2     98
-#define B_INTERFACE_GFX_STATUS_PSN_BATTLER3     101 // BATTLER3: B_POSITION_OPPONENT_RIGHT
-#define B_INTERFACE_GFX_STATUS_PAR_BATTLER3     104
-#define B_INTERFACE_GFX_STATUS_SLP_BATTLER3     107
-#define B_INTERFACE_GFX_STATUS_FRZ_BATTLER3     110
-#define B_INTERFACE_GFX_STATUS_BRN_BATTLER3     113
-#define B_INTERFACE_GFX_BOTTOM_RIGHT_CORNER_HP_AS_TEXT 116 // Used in the player's
-#define B_INTERFACE_GFX_BOTTOM_RIGHT_CORNER_HP_AS_BAR  117 // healthbox in double battles
+enum
+{
+    B_INTERFACE_GFX_TRANSPARENT,
+    B_INTERFACE_GFX_HP_BAR_HP_TEXT,
+    B_INTERFACE_GFX_HP_BAR_HP_TEXT_2,
+    B_INTERFACE_GFX_HP_BAR_GREEN,
+    B_INTERFACE_GFX_HP_BAR_GREEN_2,
+    B_INTERFACE_GFX_HP_BAR_GREEN_3,
+    B_INTERFACE_GFX_HP_BAR_GREEN_4,
+    B_INTERFACE_GFX_HP_BAR_GREEN_5,
+    B_INTERFACE_GFX_HP_BAR_GREEN_6,
+    B_INTERFACE_GFX_HP_BAR_GREEN_7,
+    B_INTERFACE_GFX_HP_BAR_GREEN_8,
+    B_INTERFACE_GFX_HP_BAR_GREEN_9,
+    B_INTERFACE_GFX_EXP_BAR,
+    B_INTERFACE_GFX_EXP_BAR_2,
+    B_INTERFACE_GFX_EXP_BAR_3,
+    B_INTERFACE_GFX_EXP_BAR_4,
+    B_INTERFACE_GFX_EXP_BAR_5,
+    B_INTERFACE_GFX_EXP_BAR_6,
+    B_INTERFACE_GFX_EXP_BAR_7,
+    B_INTERFACE_GFX_EXP_BAR_8,
+    B_INTERFACE_GFX_EXP_BAR_9,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER0, // BATTLER0: B_POSITION_PLAYER_LEFT
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER0_2,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER0_3,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER0,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER0_2,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER0_3,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER0,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER0_2,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER0_3,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER0,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER0_2,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER0_3,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER0,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER0_2,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER0_3,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER0,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER0_2,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER0_3,
+    B_INTERFACE_GFX_UNUSED_0,
+    B_INTERFACE_GFX_UNUSED_1,
+    B_INTERFACE_GFX_UNUSED_2,
+    B_INTERFACE_GFX_STATUS_NONE,
+    B_INTERFACE_GFX_UNUSED_3,
+    B_INTERFACE_GFX_UNUSED_4,
+    B_INTERFACE_GFX_UNUSED_5,
+    B_INTERFACE_GFX_SAFARI_HEALTHBOX_0,
+    B_INTERFACE_GFX_SAFARI_HEALTHBOX_1,
+    B_INTERFACE_GFX_SAFARI_HEALTHBOX_2,
+    B_INTERFACE_GFX_UNUSED_6,
+    B_INTERFACE_GFX_HP_BAR_YELLOW,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_2,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_3,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_4,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_5,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_6,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_7,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_8,
+    B_INTERFACE_GFX_HP_BAR_YELLOW_9,
+    B_INTERFACE_GFX_HP_BAR_RED,
+    B_INTERFACE_GFX_HP_BAR_RED_2,
+    B_INTERFACE_GFX_HP_BAR_RED_3,
+    B_INTERFACE_GFX_HP_BAR_RED_4,
+    B_INTERFACE_GFX_HP_BAR_RED_5,
+    B_INTERFACE_GFX_HP_BAR_RED_6,
+    B_INTERFACE_GFX_HP_BAR_RED_7,
+    B_INTERFACE_GFX_HP_BAR_RED_8,
+    B_INTERFACE_GFX_HP_BAR_RED_9,
+    B_INTERFACE_GFX_HP_BAR_LEFT_BORDER, // Used in place of the HP text graphic if the pokemon is statused
+    B_INTERFACE_GFX_BALL_PARTY_SUMMARY,
+    B_INTERFACE_GFX_BALL_PARTY_SUMMARY_2,
+    B_INTERFACE_GFX_BALL_PARTY_SUMMARY_3,
+    B_INTERFACE_GFX_BALL_PARTY_SUMMARY_4,
+    B_INTERFACE_GFX_BALL_CAUGHT,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER1, // BATTLER1: B_POSITION_OPPONENT_LEFT
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER1_2,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER1_3,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER1,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER1_2,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER1_3,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER1,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER1_2,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER1_3,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER1,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER1_2,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER1_3,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER1,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER1_2,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER1_3,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER1,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER1_2,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER1_3,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER2, // BATTLER2: B_POSITION_PLAYER_RIGHT
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER2_2,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER2_3,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER2,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER2_2,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER2_3,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER2,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER2_2,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER2_3,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER2,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER2_2,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER2_3,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER2,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER2_2,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER2_3,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER2,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER2_2,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER2_3,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER3, // BATTLER3: B_POSITION_OPPONENT_RIGHT
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER3_2,
+    B_INTERFACE_GFX_STATUS_PSN_BATTLER3_3,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER3,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER3_2,
+    B_INTERFACE_GFX_STATUS_PAR_BATTLER3_3,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER3,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER3_2,
+    B_INTERFACE_GFX_STATUS_SLP_BATTLER3_3,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER3,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER3_2,
+    B_INTERFACE_GFX_STATUS_FRZ_BATTLER3_3,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER3,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER3_2,
+    B_INTERFACE_GFX_STATUS_BRN_BATTLER3_3,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER3,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER3_2,
+    B_INTERFACE_GFX_STATUS_FRB_BATTLER3_3,
+    B_INTERFACE_GFX_BOTTOM_RIGHT_CORNER_HP_AS_TEXT, // healthbox in double battles
+    B_INTERFACE_GFX_BOTTOM_RIGHT_CORNER_HP_AS_BAR, // healthbox in double battles
+};
 
 
 static void SpriteCB_HealthBoxOther(struct Sprite *sprite);
@@ -377,7 +472,7 @@ static const struct CompressedSpriteSheet sStatusSummaryBarSpriteSheet =
 
 static const struct SpritePalette sPartySummaryBarSpritePals =
 {
-    .data = gBattleInterface_Healthbox_Pal, 
+    .data = gBattleInterface_Healthbox_Pal,
     .tag = TAG_PARTY_SUMMARY_BAR_PAL,
 };
 
@@ -389,7 +484,7 @@ static const struct SpritePalette sPartySummaryBallSpritePals =
 
 static const struct SpriteSheet sPartySummaryBallSpriteSheets =
 {
-    .data = gBattleInterface_Gfx + B_INTERFACE_GFX_BALL_PARTY_SUMMARY,
+    .data = &gHealthboxElementsGfxTable[B_INTERFACE_GFX_BALL_PARTY_SUMMARY],
     .size = 4 * TILE_SIZE_4BPP,
     .tag = TAG_PARTY_SUMMARY_BALL_TILE,
 };
@@ -578,7 +673,7 @@ u8 CreateSafariPlayerHealthboxSprites(void)
 
 static const u8 *GetBattleInterfaceGfxPtr(u8 elementId)
 {
-    return gBattleInterface_Gfx[elementId];
+    return gHealthboxElementsGfxTable[elementId];
 }
 
 // Syncs the position of healthbar accordingly with the healthbox.
@@ -696,35 +791,29 @@ void UpdateOamPriorityInAllHealthboxes(u8 priority, bool32 hideHPBoxes)
     }
 }
 
+static const s16 sBattlerHealthboxCoords[BATTLE_COORDS_COUNT][MAX_BATTLERS_COUNT][2] =
+{
+    [BATTLE_COORDS_SINGLES] =
+    {
+        [B_POSITION_PLAYER_LEFT]   = { 158, 88 },
+        [B_POSITION_OPPONENT_LEFT] = { 44,  30 },
+    },
+    [BATTLE_COORDS_DOUBLES] =
+    {
+        [B_POSITION_PLAYER_LEFT]    = { 159, 75 },
+        [B_POSITION_PLAYER_RIGHT]   = { 171, 100 },
+        [B_POSITION_OPPONENT_LEFT]  = { 44,  19 },
+        [B_POSITION_OPPONENT_RIGHT] = { 32,  44 },
+    },
+};
+
 void GetBattlerHealthboxCoords(u8 battler, s16 *x, s16 *y)
 {
-    *x = 0, *y = 0;
+    enum BattlerPosition position = GetBattlerPosition(battler);
+    enum BattleCoordTypes index = GetBattlerCoordsIndex(battler);
 
-    if (!GetBattlerCoordsIndex(battler))
-    {
-        if (GetBattlerSide(battler) != B_SIDE_PLAYER)
-            *x = 44, *y = 30;
-        else
-            *x = 158, *y = 88;
-    }
-    else
-    {
-        switch (GetBattlerPosition(battler))
-        {
-        case B_POSITION_PLAYER_LEFT:
-            *x = 159, *y = 75;
-            break;
-        case B_POSITION_PLAYER_RIGHT:
-            *x = 171, *y = 100;
-            break;
-        case B_POSITION_OPPONENT_LEFT:
-            *x = 44, *y = 19;
-            break;
-        case B_POSITION_OPPONENT_RIGHT:
-            *x = 32, *y = 44;
-            break;
-        }
-    }
+    *x = sBattlerHealthboxCoords[index][position][0];
+    *y = sBattlerHealthboxCoords[index][position][1];
 }
 
 void InitBattlerHealthboxCoords(u8 battler)
@@ -1090,50 +1179,43 @@ void SwapHpBarsWithHpText(void)
 #define sSpeed                  data[3]
 #define sIsEmptyBall            data[7]
 
-u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, bool8 isSwitchingMons, bool8 isBattleStart)
+u8 CreatePartyStatusSummarySprites(enum BattlerId battler, struct HpAndStatus *partyInfo, bool8 skipPlayer, bool8 isBattleStart)
 {
     bool8 isOpponent;
-    s8 nValidMons;
-    s16 x, y, x2, speed;
-    s32 i;
+    s16 bar_X, bar_Y, bar_pos2_X, bar_data0;
+    s32 i, j, var;
     u8 summaryBarSpriteId;
     u8 ballIconSpritesIds[PARTY_SIZE];
     u8 taskId;
 
-    if (!isSwitchingMons || GetBattlerPosition(battlerId) != B_POSITION_OPPONENT_RIGHT)
+    if (!skipPlayer || GetBattlerPosition(battler) != B_POSITION_OPPONENT_RIGHT)
     {
-        if (GetBattlerSide(battlerId) == B_SIDE_PLAYER)
+        if (IsOnPlayerSide(battler))
         {
             isOpponent = FALSE;
-            x = 136, y = 96;
-            x2 = 100;
-            speed = -5;
+            bar_X = 136, bar_Y = 96;
+            bar_pos2_X = 100;
+            bar_data0 = -5;
         }
         else
         {
             isOpponent = TRUE;
 
-            if (!isSwitchingMons || !GetBattlerCoordsIndex(battlerId))
-                x = 104, y = 40;
+            if (!skipPlayer || GetBattlerCoordsIndex(battler) == BATTLE_COORDS_SINGLES)
+                bar_X = 104, bar_Y = 40;
             else
-                x = 104, y = 16;
+                bar_X = 104, bar_Y = 16;
 
-            x2 = -100;
-            speed = 5;
+            bar_pos2_X = -100;
+            bar_data0 = 5;
         }
     }
     else
     {
         isOpponent = TRUE;
-        x = 104, y = 40;
-        x2 = -100;
-        speed = 5;
-    }
-
-    for (i = 0, nValidMons = 0; i < PARTY_SIZE; i++)
-    {
-        if (partyInfo[i].hp != HP_EMPTY_SLOT)
-            nValidMons++;
+        bar_X = 104, bar_Y = 40;
+        bar_pos2_X = -100;
+        bar_data0 = 5;
     }
 
     LoadCompressedSpriteSheetUsingHeap(&sStatusSummaryBarSpriteSheet);
@@ -1141,10 +1223,10 @@ u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, 
     LoadSpritePalette(&sPartySummaryBarSpritePals);
     LoadSpritePalette(&sPartySummaryBallSpritePals);
 
-    summaryBarSpriteId = CreateSprite(&sPartySummaryBarSpriteTemplates[isOpponent], x, y, 10);
+    summaryBarSpriteId = CreateSprite(&sPartySummaryBarSpriteTemplates[isOpponent], bar_X, bar_Y, 10);
     SetSubspriteTables(&gSprites[summaryBarSpriteId], sStatusSummaryBar_SubspriteTable_Enter);
-    gSprites[summaryBarSpriteId].x2 = x2;
-    gSprites[summaryBarSpriteId].sEnterSpeed = speed;
+    gSprites[summaryBarSpriteId].x2 = bar_pos2_X;
+    gSprites[summaryBarSpriteId].sEnterSpeed = bar_data0;
 
     if (isOpponent)
     {
@@ -1152,11 +1234,13 @@ u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, 
         gSprites[summaryBarSpriteId].oam.matrixNum = ST_OAM_HFLIP;
     }
     else
+    {
         gSprites[summaryBarSpriteId].x += 96;
+    }
 
     for (i = 0; i < PARTY_SIZE; i++)
     {
-        ballIconSpritesIds[i] = CreateSpriteAtEnd(&sPartySummaryBallSpriteTemplates[isOpponent], x, y - 4, 9);
+        ballIconSpritesIds[i] = CreateSpriteAtEnd(&sPartySummaryBallSpriteTemplates[isOpponent], bar_X, bar_Y - 4, 9);
 
         if (!isBattleStart)
             gSprites[ballIconSpritesIds[i]].callback = SpriteCB_PartySummaryBall_OnSwitchout;
@@ -1185,81 +1269,132 @@ u8 CreatePartyStatusSummarySprites(u8 battlerId, struct HpAndStatus *partyInfo, 
         gSprites[ballIconSpritesIds[i]].sIsOpponent = isOpponent;
     }
 
-    if (GetBattlerSide(battlerId) == B_SIDE_PLAYER)
+    if (IsOnPlayerSide(battler))
     {
-        for (i = 0; i < PARTY_SIZE; i++)
+        if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+            for (i = 0; i < PARTY_SIZE; i++)
             {
-                if (partyInfo[i].hp == HP_EMPTY_SLOT) 
+                if (partyInfo[i].hp == HP_EMPTY_SLOT)
                 {
+                    // empty slot or an egg
                     gSprites[ballIconSpritesIds[i]].oam.tileNum += 1;
                     gSprites[ballIconSpritesIds[i]].sIsEmptyBall = TRUE;
                 }
                 else if (partyInfo[i].hp == 0)
+                {
+                    // fainted mon
                     gSprites[ballIconSpritesIds[i]].oam.tileNum += 3;
+                }
                 else if (partyInfo[i].status != STATUS1_NONE)
+                {
+                    // mon with major status
                     gSprites[ballIconSpritesIds[i]].oam.tileNum += 2;
+                }
             }
-            else
+        }
+        else
+        {
+            for (i = 0, var = PARTY_SIZE - 1, j = 0; j < PARTY_SIZE; j++)
             {
-                if (i >= nValidMons) 
+                if (partyInfo[j].hp == HP_EMPTY_SLOT)
                 {
-                    gSprites[ballIconSpritesIds[i]].oam.tileNum += 1;
-                    gSprites[ballIconSpritesIds[i]].sIsEmptyBall = TRUE;
+                     // empty slot or an egg
+                    gSprites[ballIconSpritesIds[var]].oam.tileNum += 1;
+                    gSprites[ballIconSpritesIds[var]].sIsEmptyBall = TRUE;
+                    var--;
+                    continue;
                 }
-                else if (partyInfo[i].hp == 0)
+                else if (partyInfo[j].hp == 0)
+                {
+                    // fainted mon
                     gSprites[ballIconSpritesIds[i]].oam.tileNum += 3;
-                else if (partyInfo[i].status != STATUS1_NONE)
+                }
+                else if (gBattleTypeFlags & BATTLE_TYPE_ARENA && gBattleStruct->arenaLostPlayerMons & (1u << j))
+                {
+                    // fainted arena mon
+                    gSprites[ballIconSpritesIds[i]].oam.tileNum += 3;
+                }
+                else if (partyInfo[j].status != STATUS1_NONE)
+                {
+                    // mon with primary status
                     gSprites[ballIconSpritesIds[i]].oam.tileNum += 2;
+                }
+                i++;
             }
         }
     }
     else
     {
-        for (i = 0; i < PARTY_SIZE; i++)
+        if (gBattleTypeFlags & (BATTLE_TYPE_MULTI | BATTLE_TYPE_TWO_OPPONENTS))
         {
-            if (gBattleTypeFlags & BATTLE_TYPE_MULTI)
+            for (var = PARTY_SIZE - 1, i = 0; i < PARTY_SIZE; i++)
             {
                 if (partyInfo[i].hp == HP_EMPTY_SLOT)
                 {
-                    gSprites[ballIconSpritesIds[5 - i]].oam.tileNum += 1;
-                    gSprites[ballIconSpritesIds[5 - i]].sIsEmptyBall = TRUE;
+                    // empty slot or an egg
+                    gSprites[ballIconSpritesIds[var]].oam.tileNum += 1;
+                    gSprites[ballIconSpritesIds[var]].sIsEmptyBall = TRUE;
                 }
                 else if (partyInfo[i].hp == 0)
-                    gSprites[ballIconSpritesIds[5 - i]].oam.tileNum += 3;
+                {
+                    // fainted mon
+                    gSprites[ballIconSpritesIds[var]].oam.tileNum += 3;
+                }
                 else if (partyInfo[i].status != STATUS1_NONE)
-                    gSprites[ballIconSpritesIds[5 - i]].oam.tileNum += 2;
+                {
+                    // mon with primary status
+                    gSprites[ballIconSpritesIds[var]].oam.tileNum += 2;
+                }
+                var--;
             }
-            else
+        }
+        else
+        {
+            for (var = 0, i = 0, j = 0; j < PARTY_SIZE; j++)
             {
-                ballIconSpritesIds[5 - i] += 0;
-                if (i >= nValidMons)
+                if (partyInfo[j].hp == HP_EMPTY_SLOT)
                 {
-                    gSprites[ballIconSpritesIds[5 - i]].oam.tileNum += 1;
-                    gSprites[ballIconSpritesIds[5 - i]].sIsEmptyBall = TRUE;
+                    // empty slot or an egg
+                    gSprites[ballIconSpritesIds[i]].oam.tileNum += 1;
+                    gSprites[ballIconSpritesIds[i]].sIsEmptyBall = TRUE;
+                    i++;
+                    continue;
                 }
-                else if (partyInfo[i].hp == 0)
-                    gSprites[ballIconSpritesIds[5 - i]].oam.tileNum += 3;
-                else if (partyInfo[i].status != STATUS1_NONE)
+                else if (partyInfo[j].hp == 0)
                 {
-                    do
-                    {
-                        gSprites[ballIconSpritesIds[5 - i]].oam.tileNum += 2;
-                    } while (0);
+                     // fainted mon
+                    gSprites[ballIconSpritesIds[PARTY_SIZE - 1 - var]].oam.tileNum += 3;
                 }
+                else if (gBattleTypeFlags & BATTLE_TYPE_ARENA && gBattleStruct->arenaLostOpponentMons & (1u << j))
+                {
+                     // fainted arena mon
+                    gSprites[ballIconSpritesIds[PARTY_SIZE - 1 - var]].oam.tileNum += 3;
+                }
+                else if (partyInfo[j].status != STATUS1_NONE)
+                {
+                     // mon with primary status
+                    gSprites[ballIconSpritesIds[PARTY_SIZE - 1 - var]].oam.tileNum += 2;
+                }
+                var++;
             }
         }
     }
 
     taskId = CreateTask(TaskDummy, 5);
-    gTasks[taskId].tBattler = battlerId;
+    gTasks[taskId].tBattler = battler;
     gTasks[taskId].tSummaryBarSpriteId = summaryBarSpriteId;
 
     for (i = 0; i < PARTY_SIZE; i++)
         gTasks[taskId].tBallIconSpriteId(i) = ballIconSpritesIds[i];
 
     gTasks[taskId].tIsBattleStart = isBattleStart;
+
+    if (isBattleStart)
+    {
+        gBattleSpritesDataPtr->animationData->field_9_x1C++;
+    }
+
     PlaySE12WithPanning(SE_BALL_TRAY_ENTER, 0);
     return taskId;
 }
@@ -1566,7 +1701,7 @@ void TryAddPokeballIconToHealthbox(u8 healthboxSpriteId, bool8 noStatus)
 {
     u8 battlerId, healthBarSpriteId;
 
-    if (gBattleTypeFlags & (BATTLE_TYPE_FIRST_BATTLE | BATTLE_TYPE_OLD_MAN_TUTORIAL | BATTLE_TYPE_POKEDUDE))
+    if (gBattleTypeFlags & (BATTLE_TYPE_FIRST_BATTLE | BATTLE_TYPE_CATCH_TUTORIAL | BATTLE_TYPE_POKEDUDE))
         return;
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
@@ -1650,6 +1785,11 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
         statusGfxPtr = GetBattleInterfaceGfxPtr(GetStatusIconForBattlerId(B_INTERFACE_GFX_STATUS_FRZ_BATTLER0, battlerId));
         statusPalId = PAL_STATUS_FRZ;
     }
+    else if (status & STATUS1_FROSTBITE)
+    {
+        statusGfxPtr = GetBattleInterfaceGfxPtr(GetStatusIconForBattlerId(B_INTERFACE_GFX_STATUS_FRB_BATTLER0, battlerId));
+        statusPalId = PAL_STATUS_FRZ;
+    }
     else if (status & STATUS1_PARALYSIS)
     {
         statusGfxPtr = GetBattleInterfaceGfxPtr(GetStatusIconForBattlerId(B_INTERFACE_GFX_STATUS_PAR_BATTLER0, battlerId));
@@ -1679,7 +1819,7 @@ static void UpdateStatusIconInHealthbox(u8 healthboxSpriteId)
     FillPalette(sStatusIconColors[statusPalId], pltAdder + OBJ_PLTT_OFFSET, PLTT_SIZEOF(1));
     CpuCopy16(&gPlttBufferUnfaded[OBJ_PLTT_OFFSET + pltAdder], (u16 *)OBJ_PLTT + pltAdder, PLTT_SIZEOF(1));
     CpuCopy32(statusGfxPtr, (void *)(OBJ_VRAM0 + (gSprites[healthboxSpriteId].oam.tileNum + tileNumAdder) * TILE_SIZE_4BPP), 3 * TILE_SIZE_4BPP);
-    if (GetBattlerCoordsIndex(battlerId) == TRUE || GetBattlerSide(battlerId) == B_SIDE_OPPONENT)
+    if (GetBattlerCoordsIndex(battlerId) == BATTLE_COORDS_DOUBLES || !IsOnPlayerSide(battlerId))
     {
         if (!gBattleSpritesDataPtr->battlerData[battlerId].hpNumbersNoBars)
         {
@@ -1701,11 +1841,11 @@ static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battlerId)
     switch (statusElementId)
     {
     case B_INTERFACE_GFX_STATUS_PSN_BATTLER0:
-        if (battlerId == 0)
+        if (battlerId == B_BATTLER_0)
             ret = B_INTERFACE_GFX_STATUS_PSN_BATTLER0;
-        else if (battlerId == 1)
+        else if (battlerId == B_BATTLER_1)
             ret = B_INTERFACE_GFX_STATUS_PSN_BATTLER1;
-        else if (battlerId == 2)
+        else if (battlerId == B_BATTLER_2)
             ret = B_INTERFACE_GFX_STATUS_PSN_BATTLER2;
         else
             ret = B_INTERFACE_GFX_STATUS_PSN_BATTLER3;
@@ -1739,6 +1879,16 @@ static u8 GetStatusIconForBattlerId(u8 statusElementId, u8 battlerId)
             ret = B_INTERFACE_GFX_STATUS_FRZ_BATTLER2;
         else
             ret = B_INTERFACE_GFX_STATUS_FRZ_BATTLER3;
+        break;
+    case B_INTERFACE_GFX_STATUS_FRB_BATTLER0:
+        if (battlerId == 0)
+            ret = B_INTERFACE_GFX_STATUS_FRB_BATTLER0;
+        else if (battlerId == 1)
+            ret = B_INTERFACE_GFX_STATUS_FRB_BATTLER1;
+        else if (battlerId == 2)
+            ret = B_INTERFACE_GFX_STATUS_FRB_BATTLER2;
+        else
+            ret = B_INTERFACE_GFX_STATUS_FRB_BATTLER3;
         break;
     case B_INTERFACE_GFX_STATUS_BRN_BATTLER0:
         if (battlerId == 0)

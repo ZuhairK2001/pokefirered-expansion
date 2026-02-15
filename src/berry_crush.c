@@ -1270,7 +1270,7 @@ static u32 Cmd_PrintMessage(struct BerryCrushGame * game, u8 *args)
         CopyWindowToVram(0, COPYWIN_FULL);
         break;
     case 1:
-        if (!IsTextPrinterActive(0))
+        if (!IsTextPrinterActiveOnWindow(0))
         {
             if (keys == 0)
                 ++game->cmdState;
@@ -2366,7 +2366,7 @@ static u32 Cmd_StopGame(struct BerryCrushGame * game, u8 *args)
         CopyWindowToVram(0, COPYWIN_FULL);
         break;
     case 1:
-        if (IsTextPrinterActive(0))
+        if (IsTextPrinterActiveOnWindow(0))
             return 0;
         game->gfx.counter = 120;
         break;
@@ -3268,14 +3268,13 @@ static void DrawPlayerNameWindows(struct BerryCrushGame * game)
 static void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame * game)
 {
     u8 i = 0;
-    u8 *crusherGfx;
+    u8 *windowGfx = malloc_and_decompress(gBerryCrush_TextWindows_Tilemap, NULL);;
 
-    DecompressDataWithHeaderWram(gBerryCrush_TextWindows_Tilemap, gDecompressionBuffer);
-    for (crusherGfx = gDecompressionBuffer; i < game->playerCount; ++i)
+    for (i = 0; i < game->playerCount; ++i)
     {
         CopyToBgTilemapBufferRect(
             3,
-            &crusherGfx[game->gfx.playerCoords[i]->playerId * 40],
+            &windowGfx[game->gfx.playerCoords[i]->playerId * 40],
             game->gfx.playerCoords[i]->windowGfxX,
             game->gfx.playerCoords[i]->windowGfxY,
             10,
@@ -3283,6 +3282,7 @@ static void CopyPlayerNameWindowGfxToBg(struct BerryCrushGame * game)
         );
     }
     CopyBgTilemapBufferToVram(3);
+    Free(windowGfx);
 }
 
 static void CreateGameSprites(struct BerryCrushGame * game)

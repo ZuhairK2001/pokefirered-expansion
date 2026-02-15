@@ -134,7 +134,7 @@ static void CreateBerryPouchSprite(void);
 static void StartBerryPouchSpriteWobbleAnim(void);
 static void SpriteCB_BerryPouchWaitWobbleAnim(struct Sprite *sprite);
 
-static const struct BgTemplate sBgTemplates[] = 
+static const struct BgTemplate sBgTemplates[] =
 {
     {
         .bg = 0,
@@ -163,7 +163,7 @@ static const struct BgTemplate sBgTemplates[] =
     }
 };
 
-static const TaskFunc sBerryPouchContextMenuTasks[] = 
+static const TaskFunc sBerryPouchContextMenuTasks[] =
 {
     [BERRYPOUCH_FROMFIELD]            = Task_NormalContextMenu,
     [BERRYPOUCH_FROMPARTYGIVE]        = Task_ContextMenu_FromPartyGiveMenu,
@@ -174,23 +174,23 @@ static const TaskFunc sBerryPouchContextMenuTasks[] =
     [BERRYPOUCH_FROMBERRYTREE]        = BerryPouch_StartFadeToExitCallback,
 };
 
-static const struct YesNoFuncTable sYesNoFuncs_Toss = 
+static const struct YesNoFuncTable sYesNoFuncs_Toss =
 {
     .yesFunc = Task_TossYes,
     .noFunc  = Task_TossNo
 };
 
-static const struct YesNoFuncTable sYesNoFuncs_Sell = 
+static const struct YesNoFuncTable sYesNoFuncs_Sell =
 {
     .yesFunc = Task_SellYes,
     .noFunc  = Task_SellNo
 };
 
-static const struct MenuAction sContextMenuActions[] = 
+static const struct MenuAction sContextMenuActions[] =
 {
-    {gOtherText_Use,  {Task_BerryPouch_Use}},
-    {gOtherText_Toss, {Task_BerryPouch_Toss}},
-    {gOtherText_Give, {Task_BerryPouch_Give}},
+    {gMenuText_Use,  {Task_BerryPouch_Use}},
+    {gMenuText_Toss, {Task_BerryPouch_Toss}},
+    {gMenuText_Give, {Task_BerryPouch_Give}},
     {gOtherText_Exit, {Task_BerryPouch_Exit}},
     {gString_Dummy,   {NULL}}
 };
@@ -941,7 +941,7 @@ static void SortAndCountBerries(void)
     enum Pocket pocket = POCKET_BERRIES;
     struct BagPocket *bagPocket = &gBagPockets[pocket];
 
-    SortBerriesOrTMHMs(pocket);
+    SortItemsInBag(bagPocket, SORT_BY_INDEX);
     sResources->listMenuNumItems = 0;
     for (i = 0; i < bagPocket->capacity; i++)
     {
@@ -1155,7 +1155,7 @@ static void Task_BerryPouch_Use(u8 taskId)
     {
         sItemUseOnFieldCB = ItemUseOnFieldCB_Berry;
         gFieldCallback = FieldCB_UseItemOnField;
-        
+
         // gBagMenu->newScreenCallback = CB2_ReturnToField;
         // Task_FadeAndCloseBagMenu(taskId);
         sResources->exitCallback = CB2_ReturnToField;
@@ -1193,7 +1193,7 @@ static void Task_AskTossMultiple(u8 taskId)
     s16 * data = gTasks[taskId].data;
 
     ConvertIntToDecimalStringN(gStringVar2, tItemCount, STR_CONV_MODE_LEFT_ALIGN, MAX_ITEM_DIGITS);
-    StringExpandPlaceholders(gStringVar4, gText_ThrowAwayStrVar2OfThisItemQM);
+    StringExpandPlaceholders(gStringVar4, gText_ConfirmTossItems);
     BerryPouchPrint(GetOrCreateVariableWindow(7), FONT_NORMAL, gStringVar4, 0, 2, 1, 2, 0, 1);
     CreateYesNoMenuWin3(taskId, &sYesNoFuncs_Toss);
 }
@@ -1251,7 +1251,7 @@ static void Task_TossYes(u8 taskId)
     DestroyVariableWindow(7);
     CopySelectedListMenuItemName(tListPosition, gStringVar1);
     ConvertIntToDecimalStringN(gStringVar2, tItemCount, STR_CONV_MODE_LEFT_ALIGN, MAX_ITEM_DIGITS);
-    StringExpandPlaceholders(gStringVar4, gText_ThrewAwayStrVar2StrVar1s);
+    StringExpandPlaceholders(gStringVar4, gText_ThrewAwayVar2Var1s);
     BerryPouchPrint(GetOrCreateVariableWindow(9), FONT_NORMAL, gStringVar4, 0, 2, 1, 2, 0, 1);
     gTasks[taskId].func = Task_WaitButtonThenTossBerries;
 }
@@ -1378,7 +1378,7 @@ static void Task_ContextMenu_Sell(u8 taskId)
 
             if (tQuantity > MAX_BAG_ITEM_CAPACITY)
                 tQuantity = MAX_BAG_ITEM_CAPACITY;
-            
+
             if (tQuantity > maxQuantity)
                 tQuantity = maxQuantity;
 

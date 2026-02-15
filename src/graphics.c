@@ -419,7 +419,19 @@ const u32 gUnusedTilemap_BasicFrame[] = INCBIN_U32("graphics/unused/basic_frame.
 
 const u16 gBattleInterface_Healthbox_Pal[] = INCBIN_U16("graphics/battle_interface/healthbox.gbapal");
 const u16 gBattleInterface_Healthbar_Pal[] = INCBIN_U16("graphics/battle_interface/healthbar.gbapal");
-const u8 gBattleInterface_Gfx[] = INCBIN_U8("graphics/battle_interface/healthbox_elements.4bpp");
+const u8 gHealthboxElementsGfxTable[][32] = INCBIN_U8("graphics/battle_interface/hpbar.4bpp",
+                                                  "graphics/battle_interface/expbar.4bpp",
+                                                  "graphics/battle_interface/status.4bpp",
+                                                  "graphics/battle_interface/misc.4bpp",
+                                                  "graphics/battle_interface/hpbar_anim.4bpp",
+                                                  "graphics/battle_interface/misc_frameend.4bpp",
+                                                  "graphics/battle_interface/ball_display.4bpp",
+                                                  "graphics/battle_interface/ball_caught_indicator.4bpp",
+                                                  "graphics/battle_interface/status2.4bpp", // these three duplicate sets of graphics are for the opponent/partner Pokémon
+                                                  "graphics/battle_interface/status3.4bpp",
+                                                  "graphics/battle_interface/status4.4bpp",
+                                                  "graphics/battle_interface/healthbox_doubles_frameend.4bpp",
+                                                  "graphics/battle_interface/healthbox_doubles_frameend_bar.4bpp");
 
 const u32 gBattleInterfaceGfx_UnusedWindow3[] = INCBIN_U32("graphics/battle_interface/unused_window3.4bpp.lz");
 const u32 gBattleInterfaceGfx_UnusedWindow4[] = INCBIN_U32("graphics/battle_interface/unused_window4.4bpp.lz");
@@ -1984,3 +1996,30 @@ const u32 gPokedexSearchMenuKanto_Tilemap[] = INCBIN_U32("graphics/pokedex/emera
 
 const u16 gPokedexAreaScreenAreaUnknown_Pal[] = INCBIN_U16("graphics/pokedex/emerald/area_unknown.gbapal");
 const u32 gPokedexAreaScreenAreaUnknown_Gfx[] = INCBIN_U32("graphics/pokedex/emerald/area_unknown.4bpp.smol");
+
+const u16 gFrontierFactoryMenu_Pal[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.gbapal");
+const u16 gFrontierFactoryMenu_Gfx[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.4bpp");
+const u16 gFrontierFactoryMenu_Tilemap[] = INCBIN_U16("graphics/battle_frontier/factory_screen/menu.bin");
+
+const u32 gBattleArenaJudgmentSymbolsGfx[] = INCBIN_U32("graphics/battle_frontier/arena_judgment_symbols.4bpp.smol");
+const u16 gBattleArenaJudgmentSymbolsPalette[] = INCBIN_U16("graphics/battle_frontier/arena_judgment_symbols.gbapal");
+
+// Battle Dome
+const u32 gDomeTourneyTree_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_tree.4bpp.smol");
+const u32 gDomeTourneyLine_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_line.4bpp.smol"); // the red glow mask for the tourney advancement lines
+const u32 gDomeTourneyTree_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_tree.bin.smolTM");
+const u32 gDomeTourneyLineDown_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_line_down_map.bin.smolTM");
+const u32 gDomeTourneyLineUp_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_line_up_map.bin.smolTM");
+const u32 gDomeTourneyInfoCard_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_info_card.4bpp.smol");
+const u32 gDomeTourneyInfoCard_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_info_card_tilemap.bin.smolTM");
+const u32 gDomeTourneyInfoCardBg_Tilemap[] = INCBIN_U32("graphics/battle_frontier/tourney_info_card_bg.bin.smolTM");
+const u32 gDomeTourneyTreeButtons_Gfx[] = INCBIN_U32("graphics/battle_frontier/tourney_buttons.4bpp.smol"); // exit/cancel and Poké Ball buttons
+const u16 gDomeTourneyTree_Pal[] = INCBIN_U16("graphics/battle_frontier/tourney_tree.gbapal");
+const u16 gDomeTourneyTreeButtons_Pal[] = INCBIN_U16("graphics/battle_frontier/tourney_buttons.gbapal");
+const u16 gDomeTourneyMatchCardBg_Pal[] = INCBIN_U16("graphics/battle_frontier/tourney_match_card_bg.gbapal");
+
+const u32 gBattlePyramidBag_Gfx[]          = INCBIN_U32("graphics/bag/bag_pyramid.4bpp.smol");
+const u16 gBattlePyramidBag_Pal[]          = INCBIN_U16("graphics/bag/bag_pyramid.gbapal"); // female palette is first and male is second.
+const u32 gBattlePyramidBagTilemap[]       = INCBIN_U32("graphics/bag/menu_pyramid.bin.smolTM");
+const u16 gBattlePyramidBagInterface_Pal[] = INCBIN_U16("graphics/bag/menu_pyramid.gbapal");
+const u16 gBattlePyramidFloor_Pal[][16] = INCBIN_U16("graphics/battle_frontier/pyramid_floor.gbapal");
