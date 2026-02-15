@@ -1,0 +1,40 @@
+mapscripts NewPlayerHouseUpperFlow_MapScripts {
+    
+}
+
+script SinnohFamily_Daughter {
+    lock
+    faceplayer
+    if (!flag(FLAG_BADGE04_GET)) {
+        msgbox("Back in Sinnoh, I was one of the\ntop trainers in my town.\pI had a full team and everything!\pBut after moving here, I just...\nI don't know.\pHm...\pYou've got potential, I can tell.\pCome back and battle me once\nyou've earned 4 GYM BADGES.\pLet's see if Kanto trainers are\nas tough as Sinnoh ones!", MSGBOX_DEFAULT)
+    } elif (!flag(FLAG_DEFEATED_SINNOH_GIRL)) {
+        msgbox("Oh! You have 4 BADGES now?\pAlright, let's battle!\pI'll show you how we train in\nSinnoh!", MSGBOX_DEFAULT)
+        // Battle will go here
+        setflag(FLAG_DEFEATED_SINNOH_GIRL)
+        msgbox("Wow! You're really strong!\pHere, take this. You've earned it!", MSGBOX_DEFAULT)
+        // Item give will go here
+    } else {
+        msgbox("That was a great battle!\pKeep training hard!", MSGBOX_DEFAULT)
+    }
+    release
+    end
+}
+
+movement Roserade_LeerAndTurnAway {
+    face_player
+    emote_exclamation_mark
+    delay_16 * 2
+    face_away_player
+}
+
+script SinnohFamily_Roserade {
+    lock
+    playmoncry(SPECIES_ROSERADE, CRY_MODE_ENCOUNTER)
+    msgbox("Roserade glares at you with\nintimidating eyes...", MSGBOX_DEFAULT)
+    waitmoncry
+    applymovement(LOCALID_ROSERADE, Roserade_LeerAndTurnAway)
+    waitmovement(0)
+    msgbox("It turned its back on you!", MSGBOX_DEFAULT)
+    release
+    end
+}

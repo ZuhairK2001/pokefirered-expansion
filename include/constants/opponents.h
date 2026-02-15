@@ -748,6 +748,10 @@
 #define TRAINER_CHAMPION_REMATCH_BULBASAUR       740
 #define TRAINER_CHAMPION_REMATCH_CHARMANDER      741
 #define TRAINER_CUE_BALL_PAXTON                  742
+#define TRAINER_ADAM                             743
+#define TRAINER_SOPHIA                             744
+#define TRAINER_DEREK                           745
+#define TRAINER_ROUTE2_ELDER                     746
 #define TRAINER_ANABEL                           743
 #define TRAINER_TUCKER                           744
 #define TRAINER_SPENSER                          745

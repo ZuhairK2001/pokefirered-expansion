@@ -1,0 +1,52 @@
+mapscripts ViridanHouse_MapScripts {}
+
+
+script Little_Girl_ViridianHouse_1 {
+    lock
+    faceplayer
+    msgbox("We just moved here from CELADON \nCITY! It's so much smaller here.", MSGBOX_NPC)
+    releaseall
+    end
+}
+
+script GentleMan_ViridianHouse_1 {
+    lock
+    faceplayer
+    msgbox("VIRIDIAN CITY has expanded much \nmore since I last visited.", MSGBOX_NPC)
+    releaseall
+    end
+}
+
+script ViridianCity_BrokeMan {
+    lock
+    // NO faceplayer - he ignores you!
+    msgbox("Ugh... I spent every last cent\nmoving to this city...\pThe rent here is outrageous!\pAnd don't even get me started\non the POKéMART prices!", MSGBOX_DEFAULT)
+    applymovement(BROKE_MAN, ViridianHouse1_Mov_ManHop)
+    playse(SE_LEDGE)
+    waitmovement(0)
+    release
+    end
+}
+
+script ViridianCity_ExpensiveWife {
+    lock
+    msgbox("That EEVEE in the shop window\nis calling my name...\pSure, it costs a fortune, but\nwe can afford it!\pWe just moved after all, so\nwe must have savings!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script ViridianCity_Clefairy {
+    lock
+    faceplayer
+    playmoncry(SPECIES_CLEFAIRY, CRY_MODE_NORMAL)
+    msgbox("Clefairy..\pThis CLEFAIRY is impeccably\ngroomed!\pIts fur has been brushed to\nperfection and it smells like\lexpensive perfume.", MSGBOX_DEFAULT)
+    waitmoncry
+    release
+    end
+}
+
+movement ViridianHouse1_Mov_ManHop {
+    jump_in_place_right
+    jump_in_place_right
+}
+

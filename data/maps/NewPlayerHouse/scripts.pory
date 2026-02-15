@@ -1,0 +1,27 @@
+mapscripts NewPlayerHouse_MapScripts {
+    
+}
+
+
+script SinnohFamily_Chimchar {
+    lock
+    applymovement(LOCALID_CHIMCHAR, Common_Movement_FacePlayer)
+    playmoncry(SPECIES_CHIMCHAR, CRY_MODE_WEAK)
+    textcolor(NPC_TEXT_COLOR_MALE)
+    msgbox("Char...\pChimchar looks down sadly.\lIt misses its home in Sinnoh.", MSGBOX_DEFAULT)
+    waitmoncry
+    release
+    end
+}
+
+script SinnohFamily_Dad {
+    msgbox("We just moved here from Sinnoh.\pMy company transferred me, but...\nI don't think Chimchar's adjusting well.\pIt misses the snowy mountains back\nhome.", MSGBOX_NPC)
+}
+
+script SinnohFamily_Mom {
+    msgbox("I'm actually enjoying it here!\pThe weather's much warmer than\nSinnoh, and the people are nice.\pBut the transfer was so sudden!\pMy husband said SILPH CO. is doing\nsome kind of major expansion across\lKanto.\pThey're opening new offices and\nbuilding... something.\pHe's been working late every night\nsince we got here.", MSGBOX_NPC)
+}
+
+script SinnohFamily_Son {
+    msgbox("The PIDGEY and RATTATA here\nare kinda cool, I guess.\pThey remind me of the STARLY and\nBIDOOF back in Sinnoh.\pBut it's not the same...\pI miss catching STARLY in the\nmorning before school.", MSGBOX_NPC)
+}

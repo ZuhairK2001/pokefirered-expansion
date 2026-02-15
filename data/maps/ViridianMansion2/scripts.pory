@@ -1,0 +1,307 @@
+mapscripts ViridianMansion2_MapScripts {}
+
+script Mansion_OldLady {
+    lock
+     // After defeating the fortune teller
+    if (flag(FLAG_DEFEATED_FORTUNE_TELLER)) {
+        faceplayer
+        msgbox("My daughter... she's not the\nsame anymore...\pI need something stronger to\nkeep her under control.\pPerhaps a HAUNTER would work\nbetter than that GASTLY...\pYes... a ghost to bind her\nspirit...", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    msgbox("Mutter... mutter...\nIf we charge 50 more...", MSGBOX_SIGN)
+    closemessage
+    applymovement(SCAM_LADY, Movement_OldLady_Notice)
+    waitmovement(0)
+    faceplayer
+    msgbox("Oh! A customer?\pMy daughter is currently with\nsomeone. Go wait your turn like\leveryone else!", MSGBOX_DEFAULT)
+    applymovement(SCAM_LADY, Movement_OldLady_Return)
+    waitmovement(0)
+    release
+    end
+}
+
+movement Movement_OldLady_Notice {
+    emote_exclamation_mark
+}
+
+movement Movement_OldLady_Return {
+    face_original_direction
+}
+
+script Mansion_FortuneCaretaker {
+    lock
+    if (flag(FLAG_DEFEATED_FORTUNE_TELLER)) {
+        faceplayer
+        msgbox("Thank you....")
+        release
+        end
+    }
+    faceplayer
+    msgbox("Oh, hello there.\pJust so you know, the fortune\ntelling does cost money.\pAnd please be careful around\nthe young lady and her PSYDUCK.\pThey're both quite delicate.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_PoliceOfficer {
+    lock
+    faceplayer
+    msgbox("Man, this mansion is eerie.\pEspecially that fortune telling\ngirl. Gives me chills.\pBut the pay for this gig is\nway better than my usual patrol\pduty, so I'm not complaining!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_YoungerBrother {
+    lock
+    faceplayer
+     if (flag(FLAG_DEFEATED_FORTUNE_TELLER)) {
+        msgbox("You... you beat my sister?\pDid you see it? The GASTLY?\pMother gave it to her to make\nher 'behave'...\pI tried to tell someone, but\nnobody believes me.\pPlease... you have to help her.\nShe's not herself anymore.\pThat ghost is controlling her!", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    msgbox("My sister used to play with me...\pBut now Mother has her doing\nfortune tellings all the time.\pI miss her.\pMy PSYDUCK is the only one who\nlistens to me now.\pHe's a good friend, even if he\ndoes get headaches a lot.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_BrotherPsyduck {
+    lock
+    faceplayer
+    playmoncry(SPECIES_PSYDUCK, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("The PSYDUCK looks up at you with\nsad, watery eyes.\pIt seems to sense its TRAINER's\nloneliness.\pThe poor thing clutches its head,\nbut stays close to the boy.\pAt least they have each other...", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+script Mansion_PacingChef {
+    lock
+    msgbox("The meals! The meals!\nI must get them perfect!", MSGBOX_SIGN)
+    closemessage
+    applymovement(SCARED_CHEF, Movement_PacingChef_Notice)
+    waitmovement(0)
+    faceplayer
+    msgbox("Oh! Sorry, I...\pI have to prepare special meals\nfor the fortune teller and her\pPSYDUCK three times a day!\pIf I mess up even once, I'll be\nfired!\pAnd if I lose this job, my wife\nwill leave me for sure!\pThe pressure! The pressure!\pI can't take it!", MSGBOX_DEFAULT)
+    applymovement(SCARED_CHEF, Movement_PacingChef_Return)
+    waitmovement(0)
+    release
+    end
+}
+
+movement Movement_PacingChef_Notice {
+    emote_exclamation_mark
+}
+
+movement Movement_PacingChef_Return {
+    face_original_direction
+}
+
+
+script Mansion_FortuneTellerPsyduck {
+    lock
+    if (flag(FLAG_DEFEATED_FORTUNE_TELLER)) {
+        playmoncry(SPECIES_PSYDUCK, CRY_MODE_NORMAL)
+        waitmoncry
+        msgbox("The PSYDUCK won't look at you.\pIt seems ashamed... or perhaps\nrelieved?\pIts headache appears to have\neased slightly.\pMaybe defeating its trainer gave\nit a brief respite from the\pconstant psychic strain.", MSGBOX_DEFAULT)
+        applymovement(VAR_LAST_TALKED, Psyduck_SHAME)
+        waitmovement(0)
+        release
+        end
+    }
+    faceplayer
+
+    playmoncry(SPECIES_PSYDUCK, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("This PSYDUCK looks... different.\pIts eyes are darker, almost\nempty.\pIt clutches its head constantly,\nlike it's in terrible pain.\pHow long has it been forced to\nuse its psychic powers?\pThis poor creature looks\nabsolutely drained...", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+movement Psyduck_SHAME {
+    face_away_player
+}
+
+script Mansion_FortuneTeller {
+    lock
+    faceplayer
+    
+    // After being defeated
+    if (flag(FLAG_DEFEATED_FORTUNE_TELLER)) {
+        msgbox("The spirits... are always\nwatching...\pAlways... watching...", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    msgbox("Welcome...\pDo you wish to have your\nfortune told...?", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == YES) {
+        checkmoney(500)
+        if (var(VAR_RESULT) == FALSE) {
+            msgbox("You don't have enough money...\pCome back when you do...", MSGBOX_DEFAULT)
+            release
+            end
+        }
+        msgbox("That will be 500 POKéDOLLARS...", MSGBOX_DEFAULT)
+        removemoney(500)
+        playse(SE_SHOP)
+        msgbox("Let me gaze into your future...", MSGBOX_DEFAULT)
+        closemessage
+        delay(60)
+        msgbox("I see... a great journey ahead...\pYou will face many challenges...\pBut perseverance will lead you\nto success...\pYour lucky number is... seven...", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    // First decline
+    msgbox("Are you... sure...?\pThe spirits have much to\nreveal...", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == YES) {
+        checkmoney(500)
+        if (var(VAR_RESULT) == FALSE) {
+            msgbox("You don't have enough money...\pCome back when you do...", MSGBOX_DEFAULT)
+            release
+            end
+        }
+        msgbox("That will be 500 POKéDOLLARS...", MSGBOX_DEFAULT)
+        removemoney(500)
+        playse(SE_SHOP)
+        msgbox("Let me gaze into your future...", MSGBOX_DEFAULT)
+        closemessage
+        delay(60)
+        msgbox("I see... a great journey ahead...\pYou will face many challenges...\pBut perseverance will lead you\nto success...\pYour lucky number is... seven...", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    // Second decline
+    msgbox("You WILL have your fortune told!", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == YES) {
+        checkmoney(500)
+        if (var(VAR_RESULT) == FALSE) {
+            msgbox("You don't have enough money...\pCome back when you do...", MSGBOX_DEFAULT)
+            release
+            end
+        }
+        msgbox("That will be 500 POKéDOLLARS...", MSGBOX_DEFAULT)
+        removemoney(500)
+        playse(SE_SHOP)
+        msgbox("Let me gaze into your future...", MSGBOX_DEFAULT)
+        closemessage
+        delay(60)
+        msgbox("I see... a great journey ahead...\pYou will face many challenges...\pBut perseverance will lead you\nto success...\pYour lucky number is... seven...", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    // Third decline - battle time
+    msgbox("FINE!", MSGBOX_DEFAULT)
+    closemessage
+    applymovement(VAR_LAST_TALKED, Movement_FortuneTeller_Angry)
+    waitmovement(0)
+    trainerbattle_single(TRAINER_SOPHIA, FortuneTeller_IntroText, FortuneTeller_Defeat, Mansion_FortuneTeller_PostBattle)
+    release
+    end
+}
+
+movement Movement_FortuneTeller_Angry {
+    emote_exclamation_mark
+    emote_exclamation_mark
+}
+script Mansion_FortuneTeller_PostBattle {
+    setflag(FLAG_DEFEATED_FORTUNE_TELLER)
+    msgbox("I... I lost...", MSGBOX_DEFAULT)
+    giveitem(ITEM_TWISTED_SPOON)
+    msgbox("Take this... and leave...", MSGBOX_DEFAULT)
+    closemessage
+    delay(30)
+    msgbox("Please... tell my brother...\nI'm sorry...", MSGBOX_DEFAULT)
+    closemessage
+    delay(30)
+    msgbox("...\pNext customer...", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+text FortuneTeller_IntroText {
+    "If you won't accept your\nfortune, then face your\pFATE!$"
+}
+
+text FortuneTeller_Defeat {
+    "No... Mother will be\n"
+    "so angry..."
+}
+
+script Mansion_SpellTag {
+    lock
+
+    // Try to give the item
+    giveitem(ITEM_SPELL_TAG, 1)
+    if (var(VAR_RESULT) == 0) {
+        // Bag full
+        msgbox("Your BAG is full!", MSGBOX_DEFAULT)
+        release
+        end
+    }
+
+    removeobject(9)
+    // If we got here, the SPELL TAG was obtained successfully.
+    // This flag should be tied to the item ball in the map so it disappears.
+    setflag(FLAG_ROUTE1_SPELL_TAG)
+
+    release
+    end
+}
+
+script Mansion_FortuneClientList {
+    msgbox("It's a clipboard with a client\nlist...\p'HIGH-PROFILE CLIENTELE:\pMR. FUJI - Paid 2,000 for future\nof POKéMON TOWER donations.\pBILL - Paid 5,000 to know if his\nteleporter experiments will\psucceed.\pCELADON GYM LEADER - Paid 3,000\nfor business fortune.\pSILPH CO. EXECUTIVE - Paid\n10,000 for company stocks\pforecast.\pTotal this month: 847,000\nPOKéDOLLARS!'\p...This operation is making a\nfortune off people's desperation.", MSGBOX_SIGN)
+    end
+}
+
+script Mansion_ImpressionedClient {
+    lock
+    faceplayer
+    msgbox("Oh my gosh, you HAVE to get your\nfortune told here!\pThe fortune teller said I would\nmeet someone special today, and\pthen I ran into my childhood\nfriend on the way here!\pIt's absolutely REAL! She has\ngenuine psychic powers!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_SkepticalClient {
+    lock
+    faceplayer
+    msgbox("Hmm... I don't know about this.\pI paid 500 POKéDOLLARS and all\nshe told me was 'good things\pare coming.'\pThat's pretty vague if you ask\nme. Anyone could say that.\pBut everyone swears by her, so\nmaybe I'm just being cynical...", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_NeutralClient {
+    lock
+    faceplayer
+    msgbox("The fortune she gave me was...\nokay, I guess?\pShe said I'd have trouble at work\nbut it would resolve itself.\pI mean, everyone has work problems,\nright?\pBut the PSYDUCK did seem to be\nreally focused... maybe there's\psomething to it after all?", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_FortuneTellerGastly {
+    lock
+    
+    // After being defeated
+    if (flag(FLAG_DEFEATED_FORTUNE_TELLER)) {
+        playmoncry(SPECIES_GASTLY, CRY_MODE_WEAK)
+        waitmoncry
+        msgbox("The GASTLY floats weakly...\pIts sinister aura has faded.\pWithout its trainer's dark\ncommand, it seems almost...\pordinary.\pJust a ghost POKéMON, no longer\na tool of manipulation.", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    // Before battle - menacing
+    faceplayer
+    playmoncry(SPECIES_GASTLY, CRY_MODE_ENCOUNTER)
+    waitmoncry
+    msgbox("The GASTLY swirls around the\nfortune teller ominously...\pIts eyes glow with an unnatural\nintensity.\pYou feel a chill run down your\nspine.\pThis isn't just a pet...\nIt's a guardian. A jailer.\pKeeping her bound to this room,\nthis life, this endless cycle\lof false fortunes.", MSGBOX_DEFAULT)
+    release
+    end
+}

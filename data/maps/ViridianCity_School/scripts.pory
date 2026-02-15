@@ -1,0 +1,149 @@
+raw `
+ViridianCity_School_MapScripts::
+	.byte 0
+
+ViridianCity_School_EventScript_Lass::
+	lock
+	faceplayer
+	msgbox ViridianCity_School_Text_TryingToMemorizeNotes
+	closemessage
+	applymovement LOCALID_SCHOOL_LASS, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	release
+	end
+
+ViridianCity_School_EventScript_Woman::
+	lock
+	faceplayer
+	msgbox ViridianCity_School_Text_ReadBlackboardCarefully
+	closemessage
+	applymovement LOCALID_SCHOOL_WOMAN, Common_Movement_FaceOriginalDirection
+	waitmovement 0
+	release
+	end
+
+ViridianCity_School_EventScript_Notebook::
+	lockall
+	msgbox ViridianCity_School_Text_NotebookFirstPage
+	msgbox ViridianCity_School_Text_TurnThePage, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ViridianCity_School_EventScript_StopReadingNotebook
+	msgbox ViridianCity_School_Text_NotebookSecondPage
+	msgbox ViridianCity_School_Text_TurnThePage, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ViridianCity_School_EventScript_StopReadingNotebook
+	msgbox ViridianCity_School_Text_NotebookThirdPage
+	msgbox ViridianCity_School_Text_TurnThePage, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, ViridianCity_School_EventScript_StopReadingNotebook
+	msgbox ViridianCity_School_Text_NotebookFourthPage
+	applymovement LOCALID_SCHOOL_LASS, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	textcolor NPC_TEXT_COLOR_FEMALE
+	msgbox ViridianCity_School_Text_HeyDontLookAtMyNotes
+	releaseall
+	end
+
+ViridianCity_School_EventScript_StopReadingNotebook::
+	releaseall
+	end
+
+ViridianCity_School_EventScript_Blackboard::
+	lockall
+	msgbox ViridianCity_School_Text_BlackboardListsStatusProblems
+	goto ViridianCity_School_EventScript_ChooseBlackboardTopic
+	end
+
+ViridianCity_School_EventScript_ChooseBlackboardTopic::
+	message ViridianCity_School_Text_ReadWhichTopic
+	waitmessage
+	multichoicegrid 7, 1, MULTICHOICE_TRAINER_SCHOOL_WHITEBOARD, 3, FALSE
+	switch VAR_RESULT
+	case 0, ViridianCity_School_EventScript_ReadSleep
+	case 1, ViridianCity_School_EventScript_ReadPoison
+	case 2, ViridianCity_School_EventScript_ReadParalysis
+	case 3, ViridianCity_School_EventScript_ReadBurn
+	case 4, ViridianCity_School_EventScript_ReadFreeze
+	case 5, ViridianCity_School_EventScript_ExitBlackboard
+	case 127, ViridianCity_School_EventScript_ExitBlackboard
+	end
+
+ViridianCity_School_EventScript_ReadSleep::
+	msgbox ViridianCity_School_Text_ExplainSleep
+	goto ViridianCity_School_EventScript_ChooseBlackboardTopic
+	end
+
+ViridianCity_School_EventScript_ReadBurn::
+	msgbox ViridianCity_School_Text_ExplainBurn
+	goto ViridianCity_School_EventScript_ChooseBlackboardTopic
+	end
+
+ViridianCity_School_EventScript_ReadPoison::
+	msgbox ViridianCity_School_Text_ExplainPoison
+	goto ViridianCity_School_EventScript_ChooseBlackboardTopic
+	end
+
+ViridianCity_School_EventScript_ReadFreeze::
+	msgbox ViridianCity_School_Text_ExplainFreeze
+	goto ViridianCity_School_EventScript_ChooseBlackboardTopic
+	end
+
+ViridianCity_School_EventScript_ReadParalysis::
+	msgbox ViridianCity_School_Text_ExplainParalysis
+	goto ViridianCity_School_EventScript_ChooseBlackboardTopic
+	end
+
+ViridianCity_School_EventScript_ExitBlackboard::
+	releaseall
+	end
+`
+
+mapscripts MyMapscripts_ViridianCity_School {}
+
+script Adam_Classmate_Script {
+    lock
+    faceplayer
+    msgbox("My friend Adam always beat me with \nhis PIDGEOTTO...where did he get one \pSo early?", MSGBOX_NPC)
+   release
+}
+
+script BugTrainer_Classmate_Script {
+    lock
+    faceplayer
+    msgbox("Shh! I'm trying to cheat!", MSGBOX_NPC)
+   release
+    
+}
+
+script TrainerSchool_CheatSheet {
+    msgbox("A notebook lies open on the desk.\p'Test answers: A, B, C, D, A, B...'\p...They just wrote the entire\nalphabet in order.", MSGBOX_SIGN)
+    end
+}
+
+script TrainerSchool_EarlyPidgeottoNotebook {
+    msgbox("A notebook filled with questions.\p'How does Adam already have\na PIDGEOTTO?!'\p'We JUST got our POKéMON!\nMine's still a PIDGEY!'\p'Did his Grandpa give him\nspecial training or something?'\p...The handwriting gets angrier\ntoward the end.", MSGBOX_SIGN)
+    end
+}
+
+script Lass_Classmate_Script {
+    lock
+    faceplayer
+    msgbox("I heard CLEFAIRY are really rare!\pBut I saw one in town with some\nrich lady...\pShe said it cost more than my\nhouse! How is that fair?!", MSGBOX_NPC)
+    release
+    end
+}
+
+script BattleGirl_Classmate_Script {
+    lock
+    faceplayer
+    msgbox("Forget studying! I'm gonna train\nmy POKéMON instead!\pBooks won't help me become the\nchampion!\p...But my mom says if I fail this\ntest, no more POKéMON battles\lfor a month.\pUgh, fine. What's a type chart?", MSGBOX_NPC)
+    release
+    end
+}
+
+script TrainerSchool_LassNotebook {
+    msgbox("A notebook covered in doodles.\p'Cute POKéMON I want:\n- CLEFAIRY (too expensive)\l- JIGGLYPUFF (can't find one)\l- MEOWTH (scratched me)\l- PIKACHU (keeps shocking me)'\p'Why are all the cute ones so\nmean or expensive?!'\p...There's a poorly drawn sad face\nat the bottom.", MSGBOX_SIGN)
+    end
+}
+
+script TrainerSchool_BattleGirlNotebook {
+    msgbox("A notebook with aggressive scribbles.\p'FIGHTING TYPES ARE THE BEST!'\p'Who cares about type advantages?\nJust hit harder!'\p'Teacher says PSYCHIC beats\nFIGHTING but I don't believe it.'\p'Gonna prove her wrong someday!'\p...There's a poorly drawn MACHOP\nflexing in the corner.", MSGBOX_SIGN)
+    end
+}

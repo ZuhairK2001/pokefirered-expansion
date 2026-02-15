@@ -1,0 +1,132 @@
+mapscripts ViridianMansion_MapScripts {}
+
+script Mansion_Doorman {
+    lock
+    faceplayer
+    msgbox("Ah... a visitor.\pI suppose you may enter, but\nplease refrain from touching\panything expensive.\pWhich is... everything.", MSGBOX_DEFAULT)
+    release
+    end
+}
+    
+script Mansion_HeadOfHousehold {
+    lock
+    faceplayer
+    msgbox("Ah, another visitor to my estate.\pYou know, VIRIDIAN CITY has really\ngone downhill lately.\pSome people move here and can't\neven afford a modest home!\pPathetic, really. If you can't\nafford VIRIDIAN CITY living,\pwhy move here at all?", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_SpoiledGirl {
+    lock
+    faceplayer
+    
+    // First time - big payoff
+      if (!flag(FLAG_MANSION_GIRL_PAID_YOU)) {
+        msgbox("Ugh, another peasant...\pHere! Take 10,000 and leave\nme alone!", MSGBOX_DEFAULT)
+        addmoney(10000)
+        playfanfare(MUS_OBTAIN_ITEM)
+        msgbox("Received 10,000 from the girl!", MSGBOX_DEFAULT)
+        waitfanfare
+        msgbox("Now go away!", MSGBOX_DEFAULT)
+        setflag(FLAG_MANSION_GIRL_PAID_YOU)
+        release
+        end
+    }
+    
+    // After that - thinks you're staff
+    msgbox("Oh, you again?\pYou work here, right?\pHere's your tip.", MSGBOX_DEFAULT)
+    addmoney(50)
+    playfanfare(MUS_OBTAIN_ITEM)
+    waitfanfare
+    msgbox("There. Don't spend it all\nin one place!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_GoldDiggerWife {
+    lock
+    faceplayer
+    msgbox("People say I only married him\nfor his money.\pHow RUDE! I also married him for\nthis mansion.\pAnd the summer home. And the\nyacht. Love has many forms!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+script Mansion_FrenchChef {
+    lock
+    faceplayer
+    msgbox("SACRÉ BLEU! QU'EST-CE QUE C'EST?!\pA dirty little TRAINER in\nMY kitchen?!\pDo you 'ave any idea 'ow many\nMICHELIN STARS I 'ave?!\pZREE! TROIS! And you, you are\nstanding where I prepare zee\pBOEUF BOURGUIGNON!\pYour filthy shoes! Zey are\nRUINING my kitchen!\pOUT! OUT! Before I turn you into\na CASSEROLE! ALLEZ! VITE VITE!", MSGBOX_DEFAULT)
+    applymovement(VAR_LAST_TALKED, Movement_ChefAngryHop)
+    playse(SE_LEDGE)
+    waitmovement(0)
+    playse(SE_LEDGE)
+    msgbox("AND STAY OUT!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+movement Movement_ChefAngryHop {
+    emote_exclamation_mark
+    jump_in_place_down
+    jump_in_place_down
+    face_up_fast
+}
+
+script Mansion_SpoiledSon {
+    lock
+    faceplayer
+    msgbox("Hmph. I'm collecting rare POKéMON.\pFather buys me whatever I want!\pI already have 47 species!\pWhat? You caught yours yourself?\pHow... quaint.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_IncriminatingClipboard {
+    msgbox("It's a letter on official\nletterhead...\p'NOTICE OF INVESTIGATION\pDear Sir,\pYou are hereby notified that\nyour recent purchases of\prillegally obtained POKéMON are\nunder investigation.\pAdditionally, your account shows\na balance of -2,847,000\nPOKéDOLLARS.\pOFFICER JENNY will be in contact\nshortly regarding your arrest.'\p...Yikes.", MSGBOX_SIGN)
+    end
+}
+
+script Mansion_Machoke1 {
+    lock
+    playmoncry(SPECIES_MACHOKE, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("The MACHOKE is carrying a huge\nstack of boxes.\pIt looks absolutely exhausted...\pPoor thing has probably been\nworking all day.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_Machoke2 {
+    lock
+    playmoncry(SPECIES_MACHOKE, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("This MACHOKE is pushing a massive\nwardrobe across the floor.\pSweat is dripping from its brow.\pSomeone should really give it\na break!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_Kangaskhan {
+    lock
+    faceplayer
+    playmoncry(SPECIES_KANGASKHAN, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("The KANGASKHAN looks down at you\nwith sad eyes.\pIts pouch is empty... where is\nits baby?\pIt seems lonely, like it's just\nanother item in this \pboy's collection.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_LittleBoy {
+    lock
+    faceplayer
+    msgbox("Psst... hey.\pCan you take me with you?\pI'm serious! I want to leave!\pMy family only cares about money\nand showing off.\pI just want a normal life with\na PIDGEY or RATTATA...\pBut they say those POKéMON are\n'too common' for us.\p(sigh) Being rich isn't as great\nas people think...", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Mansion_Wigglytuff{
+    lock
+    faceplayer
+    playmoncry(SPECIES_WIGGLYTUFF, CRY_MODE_NORMAL)
+    waitmoncry
+    msgbox("The WIGGLYTUFF looks at you\nwith pleading eyes.\pIt seems to want to go with you.\pPerhaps it is tired of being\na mere status symbol.", MSGBOX_DEFAULT)
+    release
+    end
+}

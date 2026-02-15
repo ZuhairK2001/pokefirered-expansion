@@ -10,6 +10,7 @@ static const struct LevelUpMove sNoneLevelUpLearnset[] = {
 static const struct LevelUpMove sBulbasaurLevelUpLearnset[] = {
     LEVEL_UP_MOVE( 1, MOVE_TACKLE),
     LEVEL_UP_MOVE( 3, MOVE_GROWL),
+    LEVEL_UP_MOVE( 3, MOVE_SLUDGE),
     LEVEL_UP_MOVE( 7, MOVE_LEECH_SEED),
     LEVEL_UP_MOVE( 9, MOVE_VINE_WHIP),
     LEVEL_UP_MOVE(13, MOVE_POISON_POWDER),

@@ -1,0 +1,311 @@
+raw`
+Route2_MapScripts::
+	.byte 0
+
+Route2_EventScript_RouteSign::
+	msgbox Route2_Text_RouteSign, MSGBOX_SIGN
+	end
+
+Route2_EventScript_DiglettsCaveSign::
+	msgbox Route2_Text_DiglettsCave, MSGBOX_SIGN
+	end
+
+
+`
+
+mapscripts Route2_Scripts {}
+
+script Route2_BugCatcherBlockade1 {
+    lock
+    faceplayer
+      if (flag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)) {
+        msgbox("Whoa! You stood up to SILPH CO.!\pThat took guts!\pMaybe there's hope for VIRIDIAN\nFOREST after all.\pThanks for not backing down!", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    msgbox("Hey! SILPH CO. isn't getting\nthrough here!\pVIRIDIAN FOREST is one of the\nlast untouched POKéMON\psanctuaries in KANTO!\pThey've already paved over MT.\nMOON and drained half of CERULEAN\pCAPE!\pNot this time!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Route2_BugCatcherBlockade2 {
+    lock
+    faceplayer
+      if (flag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)) {
+        msgbox("You really showed that SILPH CO.\ngoon what's what!\pIf more people fought back like\nyou, maybe we could actually\psave this place.\pKeep fighting the good fight!", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    msgbox("SILPH CO. says they're 'improving\ninfrastructure.'\pBut we all know they just want\nto clear the forest for their\pnew factory complex!\pRare BUG POKéMON live here that\ndon't exist anywhere else!\pIf they go extinct, they're gone\nforever!", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Route2_SilphWorker1 {
+    lock
+    faceplayer
+    msgbox("These protestors are costing\nSILPH CO. thousands of\pPOKéDOLLARS every day!\pLook, I'm just following orders.\nI need this job to feed my family.\pBut between you and me... I used\nto catch WEEDLE here as a kid.\pIt's... complicated.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Route2_JadedWorker {
+    lock
+    faceplayer
+    msgbox("This path? Used to have wild\nPOKéMON everywhere.\pNow it's just a road for office\nworkers heading to their sad\pSILPH CO. desk jobs.\pWe paved over paradise for that.\nGreat.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Route2_InvestigatingHiker {
+    lock
+    faceplayer
+    msgbox("See this rock outcrop? Wasn't\nhere six months ago.\pJust... appeared. Pushed right up\nthrough the soil.\pI've been mapping TEAM ROCKET's\nold tunnel network.\pTheir leader had escape routes\nall over KANTO. Underground.\pI think this connects to one of\nthem.\pBut SILPH CO. keeps blocking my\ninvestigation. Say it's\p'private property' now.\pWhat are they hiding down there?", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+
+script Route2_ConstructionSign {
+    msgbox("SILPH CO. DEVELOPMENT PROJECT\pROUTE 2 MODERNIZATION INITIATIVE\pPhase 1: Forest Clearing\pPhase 2: Commercial Zone\pPhase 3: Industrial Complex\p'Building Tomorrow's KANTO Today!'", MSGBOX_SIGN)
+    end
+}
+
+const SILPH_WORKER_ROUTE2 = 10
+script Route2_SilphWorkerTrigger_Left {
+    lockall
+    
+    // Check if already done
+    if (flag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)) {
+        goto(SkipSilphWorker)
+    }
+    textcolor(NPC_TEXT_COLOR_MALE)
+    applymovement(OBJ_EVENT_ID_PLAYER, Player_LookDown)
+    waitmovement(0)
+    playse(SE_PIN)
+    applymovement(SILPH_WORKER_ROUTE2, Movement_SilphWorker_BlockLeft)
+    waitmovement(0)
+    faceplayer
+    msgbox("Hey! This is SILPH CO. property!\pYou can't just walk through here!\pWait for the public path on the\nright to be finished!", MSGBOX_NPC)
+    closemessage
+    
+    msgbox("Do we have an issue here?", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == NO) {
+        msgbox("Good. Now let me deal with\nthese deluded BUG CATCHERS.", MSGBOX_NPC)
+        closemessage
+        applymovement(SILPH_WORKER_ROUTE2, Movement_SilphWorker_ReturnLeft)
+        waitmovement(0)
+        //setflag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)
+        goto(SkipSilphWorker)
+    }
+    
+    msgbox("Listen, kid.\pSILPH CO. is trying to make the\nworld a better place!\pProgress requires sacrifice!\pMaybe I need to teach you some\nrespect!", MSGBOX_NPC)
+    trainerbattle_single(TRAINER_DEREK, SilphWorker_IntroText, SilphWorker_DefeatText, Route2_SilphWorker_PostBattle_Left)
+    goto(SkipSilphWorker)
+
+SkipSilphWorker:
+    releaseall
+    end
+}
+
+script Route2_SilphWorker_PostBattle_Left {
+    msgbox("Tch... whatever.\pYou're just delaying the\ninevitable.\pSILPH CO. always gets what it\nwants.", MSGBOX_DEFAULT)
+    closemessage
+    applymovement(SILPH_WORKER_ROUTE2, Movement_SilphWorker_StormOffLeft)
+    waitmovement(0)
+    removeobject(SILPH_WORKER_ROUTE2)
+    setflag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)
+    release
+    end
+}
+
+script Route2_SilphWorkerTrigger_Right {
+    lockall
+    
+    // Check if already done
+    if (flag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)) {
+        goto(SkipSilphWorkerRight)
+    }
+    textcolor(NPC_TEXT_COLOR_MALE)
+    applymovement(OBJ_EVENT_ID_PLAYER, Player_LookDown)
+    waitmovement(0)
+    playse(SE_PIN)
+    applymovement(SILPH_WORKER_ROUTE2, Movement_SilphWorker_BlockRight)
+    waitmovement(0)
+    faceplayer
+    msgbox("Hey! This is SILPH CO. property!\pYou can't just walk through here!\pWait for the public path on the\nright to be finished!", MSGBOX_NPC)
+    closemessage
+    msgbox("Do we have an issue here?", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == NO) {
+        msgbox("Good. Now let me deal with\nthese deluded BUG CATCHERS.", MSGBOX_NPC)
+        closemessage
+        applymovement(SILPH_WORKER_ROUTE2, Movement_SilphWorker_ReturnRight)
+        waitmovement(0)
+        //setflag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)
+        goto(SkipSilphWorkerRight)
+    }
+    
+    msgbox("Listen, kid.\pSILPH CO. is trying to make the\nworld a better place!\pProgress requires sacrifice!\pMaybe I need to teach you some\nrespect!", MSGBOX_DEFAULT)
+    trainerbattle_single(TRAINER_DEREK, SilphWorker_IntroText, SilphWorker_DefeatText, Route2_SilphWorker_PostBattle_Right)
+    goto(SkipSilphWorkerRight)
+
+SkipSilphWorkerRight:
+    releaseall
+    end
+}
+
+script Route2_SilphWorker_PostBattle_Right {
+    msgbox("Tch... whatever.\pYou're just delaying the\ninevitable.\pSILPH CO. always gets what it\nwants.", MSGBOX_DEFAULT)
+    closemessage
+    applymovement(SILPH_WORKER_ROUTE2, Movement_SilphWorker_StormOffRight)
+    waitmovement(0)
+    removeobject(SILPH_WORKER_ROUTE2)
+    setflag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)
+    release
+    end
+}
+
+
+movement Player_LookDown{
+    face_down
+    step_end
+}
+// LEFT SIDE MOVEMENTS
+movement Movement_SilphWorker_BlockLeft {
+    emote_exclamation_mark
+    walk_up
+    face_player
+    step_end
+}
+
+movement Movement_SilphWorker_ReturnLeft {
+    walk_down
+    step_end
+}
+
+movement Movement_SilphWorker_StormOffLeft {
+    walk_down
+    walk_down
+    walk_down
+    walk_down
+    walk_down
+    step_end
+}
+
+// RIGHT SIDE MOVEMENTS
+movement Movement_SilphWorker_BlockRight {
+    emote_exclamation_mark
+    walk_right
+    walk_up
+    face_player
+    step_end
+}
+
+movement Movement_SilphWorker_ReturnRight {
+    
+    walk_down
+    walk_left
+    step_end
+}
+
+movement Movement_SilphWorker_StormOffRight {
+    walk_left
+    walk_down
+    walk_down
+    walk_down
+    walk_down
+    walk_down
+    step_end
+}
+
+// SHARED
+movement Movement_SilphWorker_Angry {
+    emote_exclamation_mark
+    step_end
+}
+
+text SilphWorker_IntroText {
+    "You want a piece of this?!$"
+}
+
+text SilphWorker_DefeatText {
+    "I... I lost?!$"
+}
+
+
+script Route2_InformedHiker {
+    lock
+    faceplayer
+    msgbox("That SILPH CO. worker?\pHe wants folks to use this path\nso they can claim it's 'necessary\pinfrastructure.'\pThen they'll tear down VIRIDIAN\nFOREST for their fancy new\pheadquarters.\pThose kids are putting up a\nfight, but...\pI reckon it'll take a while\nbefore any of us get through.", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Route2_PhoneWorker {
+    lock
+    faceplayer
+    
+    // After defeating the Silph worker
+    if (flag(FLAG_ROUTE2_SILPH_WORKER_DEFEATED)) {
+        msgbox("...\p...\pDerek lost?\pBut... that's not...\p...\pSorry, I need to... I have to\ncall this in.\p...", MSGBOX_DEFAULT)
+        release
+        end
+    }
+    
+    msgbox("Yeah, PORYGON units are shipping\non time...\pUh huh... conversion rate is...\nwait, hold on--\pKid, I'm working. Can't you see\nI'm on a call?\pJust... go around or something.\pAnyway, as I was saying, the\ndigital synthesis metrics...", MSGBOX_DEFAULT)
+    release
+    end
+}
+
+script Route2_Elder {
+    lock
+    faceplayer
+    textcolor(NPC_TEXT_COLOR_MALE)
+    // Check if already defeated
+    if (flag(FLAG_DEFEATED_ROUTE2_ELDER)) {
+        msgbox("You've come far, young one.\pKeep that spirit burning bright.", MSGBOX_NPC)
+        release
+        end
+    }
+    
+    // Check if player has 1st badge
+    if (!flag(FLAG_BADGE01_GET)) {
+        msgbox("Hmm... I sense potential in you.\pBut you are still unproven.\pReturn when you've earned your\nfirst GYM BADGE.\pOnly then will I test your\nstrength.", MSGBOX_NPC)
+        release
+        end
+    }
+    
+    // Player has 1st badge - battle time
+    msgbox("Ah, you've returned!\pI can see the mark of a GYM\nLEADER's approval on you.\pNow... let us see if you are\ntruly worthy!", MSGBOX_YESNO)
+    
+    if (var(VAR_RESULT) == NO) {
+        msgbox("Not yet ready? Very well.\pReflection before battle is the\nmark of wisdom.", MSGBOX_NPC)
+        release
+        end
+    }
+    
+    msgbox("Then let us begin!", MSGBOX_NPC)
+    trainerbattle_single(TRAINER_ROUTE2_ELDER, Route2Elder_IntroText, Route2Elder_DefeatText, Route2_Elder_PostBattle)
+    release
+    end
+}
+
+script Route2_Elder_PostBattle {
+    msgbox("Excellent! You've proven yourself\nworthy indeed!\pTake this. It's a rare treasure\nthat will help you raise your\lPOKéMON to their full potential.", MSGBOX_DEFAULT)
+    giveitem(ITEM_GOLD_BOTTLE_CAP)
+    msgbox("Use it wisely, young trainer.\pYour journey has only just begun.", MSGBOX_DEFAULT)
+    setflag(FLAG_DEFEATED_ROUTE2_ELDER)
+    release
+    end
+}
+
+text Route2Elder_IntroText {
+    "Show me your resolve!$"
+}
+
+text Route2Elder_DefeatText {
+    "Remarkable... truly\nremarkable...$"
+}

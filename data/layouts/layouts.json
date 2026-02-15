@@ -52,7 +52,7 @@
     {
       "id": "LAYOUT_PALLET_TOWN_PROFESSOR_OAKS_LAB",
       "name": "PalletTown_ProfessorOaksLab_Layout",
-      "width": 13,
+      "width": 16,
       "height": 14,
       "border_width": 2,
       "border_height": 2,
@@ -724,7 +724,7 @@
     {
       "id": "LAYOUT_PALLET_TOWN",
       "name": "PalletTown_Layout",
-      "width": 24,
+      "width": 28,
       "height": 20,
       "border_width": 2,
       "border_height": 2,
@@ -752,7 +752,7 @@
       "height": 40,
       "border_width": 2,
       "border_height": 2,
-      "primary_tileset": "gTileset_General",
+      "primary_tileset": "gTileset_GeneralAutumn",
       "secondary_tileset": "gTileset_PewterCity",
       "border_filepath": "data/layouts/PewterCity/border.bin",
       "blockdata_filepath": "data/layouts/PewterCity/map.bin"
@@ -856,7 +856,7 @@
     {
       "id": "LAYOUT_ROUTE1",
       "name": "Route1_Layout",
-      "width": 24,
+      "width": 26,
       "height": 40,
       "border_width": 2,
       "border_height": 2,
@@ -2968,7 +2968,7 @@
     {
       "id": "LAYOUT_VIRIDIAN_CITY_SCHOOL",
       "name": "ViridianCity_School_Layout",
-      "width": 10,
+      "width": 14,
       "height": 9,
       "border_width": 2,
       "border_height": 2,
@@ -4382,8 +4382,33 @@
       "blockdata_filepath": "data/layouts/OneIsland_KindleRoad_EmberSpa/map.bin"
     },
     {
-      "id": "LAYOUT_BATTLE_FRONTIER_OUTSIDE_WEST",
-      "name": "BattleFrontier_OutsideWest_Layout",
+      "id": "LAYOUT_NPC_ADAM_HOUSE",
+      "name": "NpcAdamHouse_Layout",
+      "width": 10,
+      "height": 10,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PalletTown",
+      "border_filepath": "data/layouts/NpcAdamHouse/border.bin",
+      "blockdata_filepath": "data/layouts/NpcAdamHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_PLAYER_HOUSE",
+      "name": "NewPlayerHouse_Layout",
+      "width": 12,
+      "height": 12,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_PalletTown",
+      "border_filepath": "data/layouts/NewPlayerHouse/border.bin",
+      "blockdata_filepath": "data/layouts/NewPlayerHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_NEW_PLAYER_HOUSE_UPPER_FLOW",
+      "name": "NewPlayerHouseUpperFlow_Layout",
+
       "width": 56,
       "height": 72,
       "border_width": 2,
@@ -4564,6 +4589,78 @@
     {
       "id": "LAYOUT_BATTLE_FRONTIER_BATTLE_PYRAMID_FLOOR",
       "name": "BattleFrontier_BattlePyramidFloor_Layout",
+      "width": 8,
+      "height": 8,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_GenericBuilding1",
+      "border_filepath": "data/layouts/NewPlayerHouseUpperFlow/border.bin",
+      "blockdata_filepath": "data/layouts/NewPlayerHouseUpperFlow/map.bin"
+    },
+    {
+      "id": "LAYOUT_PALLET_HIDDEN_POTENTIAL",
+      "name": "PalletHiddenPotential_Layout",
+      "width": 10,
+      "height": 10,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_RestaurantHotel",
+      "border_filepath": "data/layouts/PalletHiddenPotential/border.bin",
+      "blockdata_filepath": "data/layouts/PalletHiddenPotential/map.bin"
+    },
+    {
+      "id": "LAYOUT_VIRIDAN_HOUSE",
+      "name": "ViridanHouse_Layout",
+      "width": 11,
+      "height": 11,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_ViridianCity",
+      "border_filepath": "data/layouts/ViridanHouse/border.bin",
+      "blockdata_filepath": "data/layouts/ViridanHouse/map.bin"
+    },
+    {
+      "id": "LAYOUT_VIRIDIAN_MANSION",
+      "name": "ViridianMansion_Layout",
+      "width": 17,
+      "height": 17,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_ViridianCity",
+      "border_filepath": "data/layouts/ViridianMansion/border.bin",
+      "blockdata_filepath": "data/layouts/ViridianMansion/map.bin"
+    },
+    {
+      "id": "LAYOUT_VIRIDIAN_MANSION2",
+      "name": "ViridianMansion2_Layout",
+      "width": 15,
+      "height": 17,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_ViridianCity",
+      "border_filepath": "data/layouts/ViridianMansion2/border.bin",
+      "blockdata_filepath": "data/layouts/ViridianMansion2/map.bin"
+    },
+    {
+      "id": "LAYOUT_VIRIDIAN_SILPH_BUILDING",
+      "name": "ViridianSilphBuilding_Layout",
+      "width": 13,
+      "height": 13,
+      "border_width": 2,
+      "border_height": 2,
+      "primary_tileset": "gTileset_Building",
+      "secondary_tileset": "gTileset_SilphCo",
+      "border_filepath": "data/layouts/ViridianSilphBuilding/border.bin",
+      "blockdata_filepath": "data/layouts/ViridianSilphBuilding/map.bin"
+    },
+    {
+      "id": "LAYOUT_BATTLE_FRONTIER_OUTSIDE_WEST",
+      "name": "BattleFrontier_OutsideWest_Layout",
       "width": 8,
       "height": 8,
       "border_width": 2,

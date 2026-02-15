@@ -530,6 +530,28 @@
 #define FLAG_HIDE_SILPH_CO_4F_TM41                              0x1FE
 
 // Unused?
+#define FLAG_BEAT_ADAM                            0x300
+#define FLAG_OLD_MAN_GAVE_SHARP_BEAK              0x301
+#define FLAG_FISHER_PALLET_MYSTIC_WATER           0x302
+#define FLAG_ROUTE1_GREAT_BALL                    0x303
+#define FLAG_DEFEATED_ROUTE1_COOLTRAINER          0x304
+#define FLAG_MANSION_GIRL_PAID_YOU                0x305
+#define FLAG_ROUTE1_SPELL_TAG                      0x306
+#define FLAG_DEFEATED_FORTUNE_TELLER               0x307
+#define FLAG_ROUTE2_SILPH_WORKER_DEFEATED           0x308
+#define FLAG_DEFEATED_SINNOH_GIRL         0x208
+#define FLAG_RECEIVED_HIDDEN_POWER 0x209
+#define FLAG_RECEIVED_ROUTE1_POKEBALLS         0x20A
+#define FLAG_POKEDEX_REWARDS_INTRO_DONE           0x20B
+#define FLAG_SCIENTIST_SAW_DEX_COMPLETION               0x20C
+#define FLAG_RECEIVED_POKEDEX_REWARD_1              0x20D
+#define FLAG_RECEIVED_POKEDEX_REWARD_30             0x20E
+#define FLAG_RECEIVED_POKEDEX_REWARD_60            0x20F
+#define FLAG_RECEIVED_POKEDEX_REWARD_100               0x210
+#define FLAG_RECEIVED_POKEDEX_REWARD_150             0x211
+#define FLAG_MEW_CUTSCENE_DONE               0x212
+#define FLAG_DEFEATED_ROUTE22_BLACKBELT               0x213
+#define FLAG_DEFEATED_ROUTE2_ELDER          0x214
 #define FLAG_ITEM_ARTISAN_CAVE_1F_CARBOS                        0x1FF
 #define FLAG_ITEM_ARTISAN_CAVE_B1F_HP_UP                        0x200
 #define FLAG_0x201               0x201
