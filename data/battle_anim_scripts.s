@@ -61,7 +61,7 @@ gBattleAnimGeneral_SilphScoped::
 	monbg ANIM_ATTACKER
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 48
-	createvisualtask AnimTask_TransformMon, 3, FALSE, FALSE, TRUE
+	createvisualtask AnimTask_TransformMon, 3, SPECIES_GFX_CHANGE_GHOST_UNVEIL
 	waitsound
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
@@ -26246,7 +26246,7 @@ gBattleAnimMove_Transform::
 	monbg ANIM_ATTACKER
 	playsewithpan SE_M_TELEPORT, SOUND_PAN_ATTACKER
 	waitplaysewithpan SE_M_MINIMIZE, SOUND_PAN_ATTACKER, 48
-	createvisualtask AnimTask_TransformMon, 2, 0, 1
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_TRANSFORM
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	end
@@ -28326,6 +28326,17 @@ gBattleAnimStatus_Nightmare::
 	clearmonbg ANIM_DEF_PARTNER
 	end
 
+gBattleAnimStatus_Frostbite::
+	playsewithpan SE_M_ICY_WIND, 0
+	loadspritegfx ANIM_TAG_ICE_CRYSTALS
+	monbg ANIM_DEF_PARTNER
+	splitbgprio ANIM_TARGET
+	call IceCrystalEffectShort
+	createsprite gSimplePaletteBlendSpriteTemplate, ANIM_ATTACKER, 2, F_PAL_TARGET, 5, 7, 0, RGB(0, 20, 31)
+	waitforvisualfinish
+	clearmonbg ANIM_DEF_PARTNER
+	end
+
 gBattleAnimGeneral_StatsChange::
 	createvisualtask AnimTask_StatsChange, 5
 	waitforvisualfinish
@@ -28757,14 +28768,28 @@ gBattleAnimGeneral_SimpleHeal::
 
 gBattleAnimGeneral_IllusionOff::
 	monbg ANIM_TARGET
-	createvisualtask AnimTask_TransformMon, 2, 1, 0
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_ILLUSION_OFF
 	waitforvisualfinish
 	clearmonbg ANIM_TARGET
 	end
 
 gBattleAnimGeneral_FormChange::
 	monbg ANIM_ATTACKER
-	createvisualtask AnimTask_TransformMon, 2, 1, 0
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_FORM_CHANGE
+	waitforvisualfinish
+	clearmonbg ANIM_ATTACKER
+	end
+
+gBattleAnimGeneral_FormChangeDisguise::
+	playsewithpan SE_CONTEST_CONDITION_LOSE, SOUND_PAN_TARGET
+	createvisualtask AnimTask_ShakeMon2, 2, ANIM_TARGET, 2, 0, 10, 1
+	waitforvisualfinish
+	playsewithpan SE_CONTEST_CURTAIN_FALL, SOUND_PAN_TARGET
+	goto gBattleAnimGeneral_FormChangeInstant
+
+gBattleAnimGeneral_FormChangeInstant::
+	monbg ANIM_ATTACKER
+	createvisualtask AnimTask_TransformMon, 2, SPECIES_GFX_CHANGE_FORM_CHANGE_INSTANT
 	waitforvisualfinish
 	clearmonbg ANIM_ATTACKER
 	end
@@ -28840,6 +28865,7 @@ MegaEvolutionSpinEffect:
 	return
 
 gBattleAnimGeneral_TeraCharge::
+	createvisualtask AnimTask_HideOpponentShadows, 2 @ Hide opponent shadows so they don't flicker between battle anims
 	loadspritegfx ANIM_TAG_TERA_CRYSTAL
 	loadspritegfx ANIM_TAG_TERA_SHATTER
 	loadspritegfx ANIM_TAG_FOCUS_ENERGY
@@ -28861,7 +28887,6 @@ gBattleAnimGeneral_TeraCharge::
 	delay 20
 	createvisualtask AnimTask_BlendBattleAnimPalExclude, 5, 5, 2, 0, 16, RGB_WHITEALPHA
 	waitforvisualfinish
-	createvisualtask AnimTask_TransformMon, 2, 1, 0
 	call TeraChargeParticles
 	playsewithpan SE_M_BRICK_BREAK, SOUND_PAN_ATTACKER
 	clearmonbg ANIM_ATK_PARTNER
@@ -29331,6 +29356,16 @@ gBattleAnimGeneral_Swamp::
 	waitforvisualfinish
 	clearmonbg ANIM_DEF_PARTNER
 	blendoff
+	end
+
+gBattleAnimGeneral_SwapToSubstitute::
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, FALSE
+	waitforvisualfinish
+	end
+
+gBattleAnimGeneral_SwapFromSubstitute::
+	createvisualtask AnimTask_SwapMonSpriteToFromSubstitute, 2, TRUE
+	waitforvisualfinish
 	end
 
 SnatchMoveTrySwapFromSubstitute:

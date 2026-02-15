@@ -1,5 +1,6 @@
 #include "global.h"
 #include "gflib.h"
+#include "battle_pyramid.h"
 #include "fieldmap.h"
 #include "menu.h"
 #include "overworld.h"
@@ -99,6 +100,12 @@ void InitMapFromSavedGame(void)
     InitMapLayoutData(&gMapHeader);
     LoadSavedMapView();
     RunOnLoadMapScript();
+}
+
+void InitBattlePyramidMap(bool8 setPlayerPosition)
+{
+    CpuFastFill16(MAPGRID_UNDEFINED, sBackupMapData, sizeof(sBackupMapData));
+    GenerateBattlePyramidFloorLayout(sBackupMapData, setPlayerPosition);
 }
 
 static void InitMapLayoutData(struct MapHeader * mapHeader)
@@ -652,7 +659,7 @@ static void SetPositionFromConnection(const struct MapConnection *connection, in
         gSaveBlock1Ptr->pos.y = mapHeader->mapLayout->height;
         break;
     default:
-        DebugPrintfLevel(MGBA_LOG_WARN, "SetPositionFromConnection was passed an invalid direction (%d)!", direction);
+        errorf("invalid direction: %d", direction);
         break;
     }
 }
@@ -675,21 +682,19 @@ bool8 CameraMove(s32 x, s32 y)
         old_x = gSaveBlock1Ptr->pos.x;
         old_y = gSaveBlock1Ptr->pos.y;
         connection = GetIncomingConnection(direction, gSaveBlock1Ptr->pos.x, gSaveBlock1Ptr->pos.y);
-        if (connection)
+        assertf(connection)
         {
-            SetPositionFromConnection(connection, direction, x, y);
-            LoadMapFromCameraTransition(connection->mapGroup, connection->mapNum);
-            gCamera.active = TRUE;
-            gCamera.x = old_x - gSaveBlock1Ptr->pos.x;
-            gCamera.y = old_y - gSaveBlock1Ptr->pos.y;
-            gSaveBlock1Ptr->pos.x += x;
-            gSaveBlock1Ptr->pos.y += y;
-            MoveMapViewToBackup(direction);
+            return gCamera.active;
         }
-        else
-        {
-            DebugPrintfLevel(MGBA_LOG_WARN, "GetIncomingConnection returned an invalid connection inside CameraMove!");
-        }
+
+        SetPositionFromConnection(connection, direction, x, y);
+        LoadMapFromCameraTransition(connection->mapGroup, connection->mapNum);
+        gCamera.active = TRUE;
+        gCamera.x = old_x - gSaveBlock1Ptr->pos.x;
+        gCamera.y = old_y - gSaveBlock1Ptr->pos.y;
+        gSaveBlock1Ptr->pos.x += x;
+        gSaveBlock1Ptr->pos.y += y;
+        MoveMapViewToBackup(direction);
     }
     return gCamera.active;
 }

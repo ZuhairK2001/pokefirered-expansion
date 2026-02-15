@@ -30,6 +30,7 @@
 #include "help_system.h"
 #include "field_fadetransition.h"
 #include "regions.h"
+#include "text.h"
 #include "trade.h"
 #include "constants/abilities.h"
 #include "constants/daycare.h"
@@ -396,7 +397,7 @@ u8 *GetMonNicknameVanilla(struct Pokemon *mon, u8 *dest)
     return StringCopyN(dest, nickname, VANILLA_POKEMON_NAME_LENGTH);
 }
 
-static u8 *DayCare_GetBoxMonNickname(struct BoxPokemon *mon, u8 *dest)
+u8 *DayCare_GetBoxMonNickname(struct BoxPokemon *mon, u8 *dest)
 {
     u8 nickname[POKEMON_NAME_LENGTH * 2];
 
@@ -762,6 +763,8 @@ static u16 GetEggSpecies(u16 species)
         found = FALSE;
         for (j = 1; j < NUM_SPECIES; j++)
         {
+            if (!IsSpeciesEnabled(j))
+                continue;
             const struct Evolution *evolutions = GetSpeciesEvolutions(j);
             if (evolutions == NULL)
                 continue;
@@ -1351,7 +1354,7 @@ void CreateEgg(struct Pokemon *mon, u16 species, bool8 setHotSpringsLocation)
     u8 metLocation;
     u8 isEgg;
 
-    CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, FALSE, 0, OT_ID_PLAYER_ID, 0);
+    CreateRandomMonWithIVs(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS);
     metLevel = 0;
     ball = BALL_POKE;
     language = LANGUAGE_JAPANESE;
@@ -1378,7 +1381,7 @@ static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *
     u8 language;
 
     personality = daycare->offspringPersonality;
-    CreateMon(mon, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, TRUE, personality, OT_ID_PLAYER_ID, 0);
+    CreateMonWithIVs(mon, species, EGG_HATCH_LEVEL, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
     metLevel = 0;
     ball = ITEM_POKE_BALL;
     language = LANGUAGE_JAPANESE;
@@ -1702,19 +1705,20 @@ static void DaycareAddTextPrinter(u8 windowId, const u8 *text, u32 x, u32 y)
     struct TextPrinterTemplate printer;
 
     printer.currentChar = text;
+    printer.type = WINDOW_TEXT_PRINTER;
     printer.windowId = windowId;
     printer.fontId = FONT_NORMAL_COPY_2;
     printer.x = x;
     printer.y = y;
     printer.currentX = x;
     printer.currentY = y;
-    printer.unk = 0;
     gTextFlags.useAlternateDownArrow = 0;
     printer.letterSpacing = 1;
     printer.lineSpacing = 1;
-    printer.fgColor = 2;
-    printer.bgColor = 1;
-    printer.shadowColor = 3;
+    printer.color.accent = 1;
+    printer.color.foreground = 2;
+    printer.color.background = 1;
+    printer.color.shadow = 3;
 
     AddTextPrinter(&printer, 0xFF, NULL);
 }
@@ -1874,7 +1878,7 @@ static void CreateHatchedMon(struct Pokemon *egg, struct Pokemon *temp)
     isModernFatefulEncounter = GetMonData(egg, MON_DATA_MODERN_FATEFUL_ENCOUNTER);
     ball = GetMonData(egg, MON_DATA_POKEBALL);
 
-    CreateMon(temp, species, EGG_HATCH_LEVEL, USE_RANDOM_IVS, TRUE, personality, OT_ID_PLAYER_ID, 0);
+    CreateMonWithIVs(temp, species, EGG_HATCH_LEVEL, personality, OTID_STRUCT_PLAYER_ID, USE_RANDOM_IVS);
 
     for (i = 0; i < MAX_MON_MOVES; i++)
         SetMonData(temp, MON_DATA_MOVE1 + i,  &moves[i]);
@@ -2206,7 +2210,7 @@ static void CB2_EggHatch_1(void)
         sEggHatchData->CB2_state++;
         break;
     case 9:
-        if (!IsTextPrinterActive(sEggHatchData->windowId))
+        if (!IsTextPrinterActiveOnWindow(sEggHatchData->windowId))
         {
             LoadUserWindowBorderGfx_(sEggHatchData->windowId, 0x140, BG_PLTT_ID(14));
             CreateYesNoMenuAtPos(&sYesNoWinTemplate, FONT_NORMAL_COPY_2, 0, 2, 0x140, 14, 0);

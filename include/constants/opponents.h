@@ -752,12 +752,19 @@
 #define TRAINER_SOPHIA                             744
 #define TRAINER_DEREK                           745
 #define TRAINER_ROUTE2_ELDER                     746
+#define TRAINER_ANABEL                           743
+#define TRAINER_TUCKER                           744
+#define TRAINER_SPENSER                          745
+#define TRAINER_GRETA                            746
+#define TRAINER_NOLAND                           747
+#define TRAINER_LUCY                             748
+#define TRAINER_BRANDON                          749
 
-// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is 
+// NOTE: Because each Trainer uses a flag to determine when they are defeated, there is
 //       only space for 25 additional trainers before trainer flag space overflows.
 //       MAX_TRAINERS_COUNT can be increased but will take up additional saveblock space
 
-#define TRAINERS_COUNT                           747
+#define TRAINERS_COUNT                           750
 #define MAX_TRAINERS_COUNT                       768
 #define TRAINER_PARTNER(partner)           (MAX_TRAINERS_COUNT + partner)
 

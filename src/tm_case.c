@@ -213,8 +213,8 @@ static void (*const sSelectTMActionTasks[])(u8 taskId) = {
 };
 
 static const struct MenuAction sMenuActions[] = {
-    [TMCASE_ACTION_USE]  = {gOtherText_Use,  {Action_Use}  },
-    [TMCASE_ACTION_GIVE] = {gOtherText_Give, {Action_Give} },
+    [TMCASE_ACTION_USE]  = {gMenuText_Use,  {Action_Use}  },
+    [TMCASE_ACTION_GIVE] = {gMenuText_Give, {Action_Give} },
     [TMCASE_ACTION_EXIT] = {gOtherText_Exit, {Action_Exit} },
 };
 
@@ -507,7 +507,7 @@ static bool8 DoSetUpTMCaseUI(void)
             gMain.state++;
         break;
     case 9:
-        SortBerriesOrTMHMs(POCKET_TM_HM);
+        SortItemsInBag(&gBagPockets[POCKET_TM_HM], SORT_BY_INDEX);
         gMain.state++;
         break;
     case 10:
@@ -1433,7 +1433,7 @@ static void Task_Pokedude_Run(u8 taskId)
     case 9:
     case 19:
         RunTextPrinters();
-        if (!IsTextPrinterActive(WIN_MESSAGE))
+        if (!IsTextPrinterActiveOnWindow(WIN_MESSAGE))
             tPokedudeState++;
         break;
     case 10:

@@ -1,6 +1,6 @@
 	.set ALLOCATE_SCRIPT_CMD_TABLE, 0
 	.include "data/script_cmd_table.inc"
-	
+
 	@ Does nothing.
 	.macro nop
 	.byte SCR_OP_NOP
@@ -56,16 +56,15 @@
 	@ Callstd ids
 	STD_OBTAIN_ITEM = 0
 	STD_FIND_ITEM = 1
-
 	MSGBOX_NPC = 2
 	MSGBOX_SIGN = 3
 	MSGBOX_DEFAULT = 4
 	MSGBOX_YESNO = 5
 	MSGBOX_AUTOCLOSE = 6
-
 	STD_OBTAIN_DECORATION = 7
 	STD_PUT_ITEM_AWAY = 8
 	STD_RECEIVED_ITEM = 9
+	MSGBOX_GETPOINTS = 10
 
 	@ Calls the script in gStdScripts at index function.
 	.macro callstd function:req
@@ -298,7 +297,7 @@
 	.2byte SPECIAL_\function
 	.endm
 
-	@ Blocks script execution until a command or C code manually unblocks it. Generally used with specific 
+	@ Blocks script execution until a command or C code manually unblocks it. Generally used with specific
 	@ commands and specials. Calling ScriptContext_Enable for instance will allow execution to continue.
 	.macro waitstate
 	.byte SCR_OP_WAITSTATE
@@ -688,6 +687,14 @@
 	map \map
 	.endm
 
+	@ Set the player object's invisibility to TRUE.
+	.macro hideplayer
+	.byte SCR_OP_HIDEOBJECTAT
+	.2byte LOCALID_PLAYER
+	.byte 0 @ map group
+	.byte 0 @ map num
+	.endm
+
 	@ Turns the currently selected object (if there is one) to face the player.
 	.macro faceplayer
 	.byte SCR_OP_FACEPLAYER
@@ -701,10 +708,9 @@
 	.endm
 
 	NULL = 0
-	OBJ_ID_NONE = 0
 
 	@ Configures the arguments for a trainer battle, then jumps to the appropriate script in scripts/trainer_battle.inc
-	.macro trainerbattle type:req localIdA:req, trainer_a:req, intro_text_a:req, lose_text_a:req, event_script_a:req, localIdB:req, trainer_b:req, intro_text_b:req, lose_text_b:req, event_script_b:req, victory_text:req, cannot_battle:req, isDouble:req, playMusicA:req, playMusicB:req, isRematch:req, rival_battle_flags=0
+	.macro trainerbattle type:req, localIdA:req, trainer_a:req, intro_text_a:req, lose_text_a:req, event_script_a:req, localIdB:req, trainer_b:req, intro_text_b:req, lose_text_b:req, event_script_b:req, victory_text:req, cannot_battle:req, isDouble:req, playMusicA:req, playMusicB:req, isRematch:req, rival_battle_flags=0
 	.byte SCR_OP_TRAINERBATTLE
 	.set trainerbattle_flags, 0
 	.ifgt \isDouble; .set trainerbattle_flags, trainerbattle_flags | (1 << 0); .endif
@@ -734,11 +740,11 @@
 	@ When used with an event script, you can also pass in an optional flag to disable music
 	.macro trainerbattle_single trainer:req, intro_text:req, lose_text:req, event_script=FALSE, music=TRUE
 	.if \event_script == FALSE
-	trainerbattle TRAINER_BATTLE_SINGLE, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_SINGLE, LOCALID_NONE, \trainer, \intro_text, \lose_text, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.elseif \music == TRUE
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, \event_script, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT, LOCALID_NONE, \trainer, \intro_text, \lose_text, \event_script, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.else
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, \event_script, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_NO_MUSIC, LOCALID_NONE, \trainer, \intro_text, \lose_text, \event_script, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.endif
 	.endm
 
@@ -746,38 +752,38 @@
 	@ and an optional event script. When used with an event script you can pass in an optional flag to disable music
 	.macro trainerbattle_double trainer:req, intro_text:req, lose_text:req, not_enough_pkmn_text:req, event_script=FALSE, music=TRUE
 	.if \event_script == FALSE
-	trainerbattle TRAINER_BATTLE_DOUBLE, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_DOUBLE, LOCALID_NONE, \trainer, \intro_text, \lose_text, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, TRUE, FALSE, FALSE
 	.elseif \music == TRUE
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, \event_script, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE, LOCALID_NONE, \trainer, \intro_text, \lose_text, \event_script, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, TRUE, FALSE, FALSE
 	.else
-	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, \event_script, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, FALSE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_CONTINUE_SCRIPT_DOUBLE_NO_MUSIC, LOCALID_NONE, \trainer, \intro_text, \lose_text, \event_script, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, TRUE, FALSE, FALSE
 	.endif
 	.endm
 
 	@ Starts a rematch battle, takes a trainer, intro text and loss text
 	.macro trainerbattle_rematch trainer:req, intro_text:req, lose_text:req
-	trainerbattle TRAINER_BATTLE_REMATCH, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, TRUE
+	trainerbattle TRAINER_BATTLE_REMATCH, LOCALID_NONE, \trainer, \intro_text, \lose_text, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, TRUE
 	.endm
 
 	@ Starts a rematch double battle. Takes a trainer, intro text, loss text, and text for when you have too few pokemon
 	.macro trainerbattle_rematch_double trainer:req, intro_text:req, lose_text:req, not_enough_pkmn_text:req
-	trainerbattle TRAINER_BATTLE_REMATCH_DOUBLE, OBJ_ID_NONE, \trainer, \intro_text, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, FALSE, TRUE, FALSE, TRUE
+	trainerbattle TRAINER_BATTLE_REMATCH_DOUBLE, LOCALID_NONE, \trainer, \intro_text, \lose_text, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, \not_enough_pkmn_text, TRUE, TRUE, FALSE, TRUE
 	.endm
 
 	@ Starts a trainer battle, skipping intro text. Takes a trainer and loss text
 	.macro trainerbattle_no_intro trainer:req, lose_text:req
-	trainerbattle TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT, OBJ_ID_NONE, \trainer, NULL, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_SINGLE_NO_INTRO_TEXT, LOCALID_NONE, \trainer, NULL, \lose_text, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.endm
 
 	@ Starts a trainer battle with victory text if the player loses. If flags is nonzero, the player will be healed after battle (and its assumed to be the tutorial battle)
 	.macro trainerbattle_earlyrival trainer:req, flags:req, lose_text:req, victory_text:req
-	trainerbattle TRAINER_BATTLE_EARLY_RIVAL, OBJ_ID_NONE, \trainer, NULL, \lose_text, NULL, OBJ_ID_NONE, TRAINER_NONE, NULL, NULL, NULL, \victory_text, NULL, FALSE, TRUE, FALSE, FALSE, \flags
+	trainerbattle TRAINER_BATTLE_EARLY_RIVAL, LOCALID_NONE, \trainer, NULL, \lose_text, NULL, LOCALID_NONE, TRAINER_NONE, NULL, NULL, NULL, \victory_text, NULL, FALSE, TRUE, FALSE, FALSE, \flags
 	.endm
 
 	@ Starts a double battle with the player against two trainers
 	@ Takes two trainers and defeat text for each
 	.macro trainerbattle_two_trainers trainer_a:req, lose_text_a:req, trainer_b:req, lose_text_b:req
-	trainerbattle TRAINER_BATTLE_TWO_TRAINERS_NO_INTRO, OBJ_ID_NONE, \trainer_a, NULL, \lose_text_a, NULL, OBJ_ID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
+	trainerbattle TRAINER_BATTLE_TWO_TRAINERS_NO_INTRO, LOCALID_NONE, \trainer_a, NULL, \lose_text_a, NULL, LOCALID_NONE, \trainer_b, NULL, \lose_text_b, NULL, NULL, NULL, FALSE, TRUE, FALSE, FALSE
 	.endm
 
 	@ Starts a trainer battle using the battle information stored in RAM (usually by the scripts in trainer_battle.inc, which
@@ -1111,7 +1117,7 @@
 	.endm
 
 	@ Gives the player an Egg of the specified species.
-	@ VAR_RESULT will be set to MON_GIVEN_TO_PARTY, MON_GIVEN_TO_PC, or MON_CANT_GIVE depending on the outcome. 
+	@ VAR_RESULT will be set to MON_GIVEN_TO_PARTY, MON_GIVEN_TO_PC, or MON_CANT_GIVE depending on the outcome.
 	.macro giveegg species:req
 	.byte SCR_OP_GIVEEGG
 	.2byte \species
@@ -1535,7 +1541,7 @@
 	.2byte \out
 	.endm
 
-	@ Gives 'count' coins to the player, up to a total of MAX_COINS. 
+	@ Gives 'count' coins to the player, up to a total of MAX_COINS.
 	@ If the player already has MAX_COINS then VAR_RESULT is set to TRUE, otherwise it is set to FALSE.
 	.macro addcoins count:req
 	.byte SCR_OP_ADDCOINS
@@ -1955,7 +1961,7 @@
 
 	@ Gives 'amount' of the specified 'item' to the player and prints a message with fanfare.
 	@ If the player doesn't have space for all the items then as many are added as possible, the
-	@ message indicates there is no room, and VAR_RESULT is set to FALSE. 
+	@ message indicates there is no room, and VAR_RESULT is set to FALSE.
 	@ Otherwise VAR_RESULT is set to TRUE, and the message indicates they have received the item(s).
 	.macro giveitem item:req, amount=1
 	setorcopyvar VAR_0x8000, \item
@@ -1976,6 +1982,12 @@
 	setorcopyvar VAR_0x8000, \item
 	setorcopyvar VAR_0x8001, \amount
 	callstd STD_PUT_ITEM_AWAY
+	.endm
+
+	@ Equivalent to giveitem but for a single decoration.
+	.macro givedecoration decoration:req
+	setorcopyvar VAR_0x8000, \decoration
+	callstd STD_OBTAIN_DECORATION
 	.endm
 
 	@ Prints the provided message after playing the fanfare music (can only be MUS_LEVEL_UP or MUS_OBTAIN_KEY_ITEM).
@@ -2184,6 +2196,12 @@
 	.2byte \slot
 	.endm
 
+	@ Sets the hp to 0 for the Pokémon in \slot.
+	.macro setko slot:req
+	callnative Script_SetKO, requests_effects=1
+	.2byte \slot
+	.endm
+
 	@ Sets VAR_RESULT to the Pokémon in \slot's Tera Type
 	.macro checkteratype slot:req
 	callnative CheckTeraType
@@ -2272,3 +2290,143 @@
 	.2byte \wait
 	.endm
 
+	.macro vsseeker_rematchid rematchId:req
+	callnative NativeVsSeekerRematchId, requests_effects=1
+	.2byte \rematchId
+	.endm
+
+	.macro chooseboxmon selectionType=SELECT_PC_MON_NORMAL
+	callnative ChooseBoxMon
+	.byte \selectionType
+	.endm
+
+@ Follower NPCs
+
+	@ Sets an existing NPC up to follow the player.
+	@ Follower flags are defined in include/constants/follower_npc.h
+	@ If you want to specify a battle partner without specifying a custom script, you can set the script parameter to 0.
+	.macro setfollowernpc localId:req, flags:req, script=0, battlePartner=0
+	.if FNPC_ENABLE_NPC_FOLLOWERS
+		checkfollowernpc
+		compare VAR_RESULT, FALSE
+		goto_if_ne 1f
+		hidefollower
+		waitmovement OBJ_EVENT_ID_FOLLOWER
+		callnative ScriptSetFollowerNPC
+		.if \script == 0
+			.set setScript, FALSE
+		.else
+			.set setScript, TRUE
+		.endif
+		.byte \localId
+		.2byte \flags
+		.byte setScript
+		.2byte \battlePartner
+		.4byte \script
+		updatefollowingmon
+        1:
+	.else
+		.error "setfollowernpc unavailable with FNPC_ENABLE_NPC_FOLLOWERS defined as FALSE"
+	.endif
+	.endm
+
+	@ Creates a new follower NPC with the specified graphics id.
+	.macro createfollowernpc gfx:req, flags:req, script=0, battlePartner=0
+	.if FNPC_ENABLE_NPC_FOLLOWERS
+		callnative ScriptCreateFollowerNPC
+		.2byte \gfx
+		.2byte \flags
+		.4byte \script
+		.2byte \battlePartner
+	.else
+		.error "createfollowernpc unavailable with FNPC_ENABLE_NPC_FOLLOWERS defined as FALSE"
+	.endif
+	.endm
+
+	@ Remove the follower NPC (assumes there will only ever be one).
+	.macro destroyfollowernpc
+	.if FNPC_ENABLE_NPC_FOLLOWERS
+		callnative ScriptDestroyFollowerNPC
+	.else
+		.error "destroyfollowernpc unavailable with FNPC_ENABLE_NPC_FOLLOWERS defined as FALSE"
+	.endif
+	.endm
+
+	@ Makes the player and follower NPC face one another.
+	.macro facefollowernpc
+	callnative ScriptFaceFollowerNPC
+	.endm
+
+	@ Makes the follower NPC walk into the player and get hidden.
+	@ Optionally, you can set the walk speed for the movement:
+	@ 0 = Slow
+	@ 1 = Normal (default)
+	@ 2 = Fast
+	@ 3 = Faster
+	.macro hidefollowernpc speed=1
+	callnative ScriptHideNPCFollower
+	.byte \speed
+	waitmovement OBJ_EVENT_ID_NPC_FOLLOWER
+	callnative HideNPCFollower
+	.endm
+
+	@ Checks if you have a follower NPC. Returns the result to VAR_RESULT.
+	.macro checkfollowernpc
+	callnative ScriptCheckFollowerNPC
+	.endm
+
+	@ Updates Pokemon follower.
+	.macro updatefollowingmon
+	callnative ScriptUpdateFollowingMon
+	.endm
+
+	@ Changes the battle partner of the existing follower NPC.
+	.macro changefollowerbattler battlePartner:req
+	callnative ScriptChangeFollowerNPCBattlePartner
+	.2byte \battlePartner
+	.endm
+
+	@ Manually buffer a string as the speaker's name for namebox.
+	@ The next shown message/msgbox will include a namebox, if the provided string is not NULL.
+	@ An SP_NAME_* constant can also be used, it'll take the name from gSpeakerNamesTable instead.
+	.macro setspeaker name:req
+	callnative SetSpeaker
+	.4byte \name
+	.endm
+
+	.macro setmultitrainerbattle trainer_a:req, lose_text_a:req, trainer_b:req, lose_text_b:req, partnerId:req
+	callnative SetMultiTrainerBattle
+	.2byte \trainer_a
+	.4byte \lose_text_a
+	.2byte \trainer_b
+	.4byte \lose_text_b
+	.2byte \partnerId
+	.endm
+
+	@ facility version of `trainerbattle` macro. Used in Battle Pyramid and Trainer Hill
+	.macro facilitytrainerbattle facility:req
+	callnative FacilityTrainerBattle
+	.byte \facility
+	.endm
+
+	@ immediately starts a battle of the given facility
+	.macro dofacilitytrainerbattle facility:req
+	callnative DoFacilityTrainerBattle
+	.byte \facility
+	.endm
+
+	.macro ingame_trade tradeId:req wantTradeMsg:req, declineTradeJump:req, wrongMonJump:req, tradeCompleteMsg:req
+	setvar VAR_0x8005, \tradeId
+	specialvar VAR_0x8009, GetInGameTradeSpeciesInfo
+	msgbox \wantTradeMsg, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, \declineTradeJump
+	chooseboxmon SELECT_PC_MON_TRADE
+	waitstate
+	goto_if_eq VAR_0x8004, PARTY_NOTHING_CHOSEN, \declineTradeJump
+	specialvar VAR_0x800B, GetTradeSpecies
+	goto_if_ne VAR_0x800B, VAR_0x8009, \wrongMonJump
+	special CreateInGameTradePokemon
+	special DoInGameTradeScene
+	waitstate
+	msgbox \tradeCompleteMsg, MSGBOX_DEFAULT
+	.endm
